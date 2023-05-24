@@ -1,0 +1,67 @@
+// Priority icon
+
+@mixin priority-icon-base() {
+  &::before {
+    content: "\00a0";
+    display: inline-block;
+    width: $priority-icon-size;
+    margin-right: $priority-icon-space;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: $priority-icon-size;
+  }
+}
+
+@mixin priority-icon($parent, $color, $icon) {
+  table.list tbody tr#{$parent} .priority,
+  .issue.details#{$parent} .attributes td.priority,
+  .issue.details#{$parent} .attribute.priority .value {
+    &::before {
+      background-image: inline-svg($icon, (path: (fill: $color)));
+    }
+  }
+}
+
+
+// Tracker highlight
+
+@mixin tracker($parent, $background, $color) {
+  tr#{$parent} .id > a,
+  tr#{$parent} .issue_id > a,
+  a#{$parent}.issue,
+  a#{$parent},
+  .relations > span > a#{$parent},
+  .parent > a#{$parent} {
+    background-color: $background;
+    color: $color;
+
+    &:hover {
+      @if hue($background) > 15deg and hue($background) < 40deg {
+        background-color: darken(adjust-hue($background, -8deg), 8%);
+      } @else {
+        background-color: darken($background, 10%);
+      }
+      color: $color;
+    }
+  }
+
+  a#{$parent} {
+    &.closed {
+      color: mix($color, $background, 75%);
+
+      &::after {
+        border-top-color: rgba($color, .95);
+      }
+
+      &:hover::after {
+        border-top-color: rgba($color, .25);
+      }
+    }
+  }
+
+  tr#{$parent} .id > a {
+    &::before {
+      color: mix($color, $background, 50%);
+    }
+  }
+}

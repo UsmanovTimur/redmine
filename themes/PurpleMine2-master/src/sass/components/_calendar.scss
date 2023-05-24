@@ -1,0 +1,96 @@
+//
+// Calendar
+// --------------------------------------------------
+
+
+table.cal {
+  width: 100%;
+  margin-bottom: $line-height-computed;
+  border: 1px solid $table-border-color;
+
+  thead th {
+    width: 14%;
+    padding: $table-condensed-cell-padding;
+    background-color: $table-bg-active;
+
+    &.week-number {
+      width: auto;
+    }
+  }
+
+  tbody tr {
+    height: 100px;
+  }
+
+  td {
+    padding: $table-condensed-cell-padding;
+    border: 1px solid $table-border-color;
+    font-size: $font-size-small;
+    vertical-align: top;
+
+    &.week-number {
+      border: 0 none;
+      background-color: $table-bg-active;
+      font-size: 1em;
+      text-align: right;
+    }
+
+    p.day-num {
+      float: right;
+      font-size: $font-size-large;
+      text-align: right;
+    }
+
+    &.odd p.day-num {
+      color: $gray-600;
+    }
+
+    &.nwday {
+      background: $table-bg-accent;
+    }
+
+    &.today {
+      background: $highlight-bg;
+
+      p.day-num {
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}
+
+table.cal .starting a,
+p.cal.legend .starting,
+table.cal .ending a,
+p.cal.legend .ending {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-caret-right;
+    width: 10px;
+    text-align: right;
+  }
+}
+
+table.cal .ending a,
+p.cal.legend .ending {
+  &::before {
+    content: $fa-var-caret-left;
+    text-align: left;
+  }
+}
+
+table.cal .starting.ending a,
+p.cal.legend .starting.ending {
+  &::before {
+    content: $fa-var-square;
+    transform: scale(.6) rotate(45deg);
+    text-align: center;
+  }
+}
+
+p.cal.legend {
+  span {
+    display: block;
+  }
+}

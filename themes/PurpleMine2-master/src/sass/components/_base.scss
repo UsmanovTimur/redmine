@@ -1,0 +1,188 @@
+//
+// Base styles
+// --------------------------------------------------
+
+html {
+  overflow-y: scroll;
+  tab-size: 4;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $body-bg;
+  color: $text-color;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+
+  &.issue.closed {
+    color: $link-color-issue-closed;
+    text-decoration: $link-closed-decoration;
+  }
+
+  &.project.closed {
+    color: $link-color-project-closed;
+  }
+
+  &.user.locked {
+    color: $link-color-user-locked;
+  }
+}
+
+// Remove the tapping delay on clickable elements
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea,
+[tabindex] {
+  touch-action: manipulation;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2em;
+  font-weight: $font-weight-semi-bold;
+  line-height: $line-height-large * .825;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: $line-height-computed;
+  font-size: 1.43em;
+  font-weight: $font-weight-semi-bold;
+  line-height: $line-height-large;
+
+  img {
+    vertical-align: middle;
+  }
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: $line-height-computed;
+  font-size: 1.14em;
+  font-weight: $font-weight-semi-bold;
+  line-height: $line-height-large;
+}
+
+h4 {
+  margin-top: 0;
+  font-size: 1em;
+  font-weight: $font-weight-semi-bold;
+  line-height: $line-height-base;
+}
+
+p {
+  margin: 0 0 ($line-height-computed * .5);
+}
+
+small {
+  font-size: $font-size-small;
+}
+
+table {
+  th {
+    font-weight: $font-weight-bold;
+  }
+
+  th,
+  td {
+    padding: $table-condensed-cell-padding $table-cell-padding;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  form {
+    p {
+      margin-bottom: ($line-height-computed * .5);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: ($line-height-computed * .5);
+  padding-left: 1.5em;
+
+  ul,
+  ol {
+    margin-bottom: 0;
+  }
+}
+
+dl {
+  margin-top: 0;
+  margin-bottom: $line-height-computed;
+}
+
+dt {
+  margin-top: $line-height-computed;
+  font-weight: $font-weight-bold;
+}
+
+dd {
+  margin-bottom: $line-height-computed;
+  margin-left: $line-height-computed;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: $font-family-monospace;
+  font-size: 1em;
+}
+
+hr {
+  margin-top: $line-height-computed;
+  margin-bottom: $line-height-computed;
+  border: 0;
+  border-top: 1px solid $hr-border;
+
+  li & {
+    margin-top: $line-height-computed * .5;
+    margin-bottom: $line-height-computed * .5;
+  }
+}
+
+blockquote {
+  margin: 0 0 $line-height-computed;
+  padding: floor($line-height-computed * .25) $padding-large-horizontal;
+  border-left: 4px solid $blockquote-border-color;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.clear {
+  @extend %clearfix;
+}

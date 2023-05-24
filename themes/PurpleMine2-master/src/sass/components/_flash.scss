@@ -1,0 +1,90 @@
+//
+// Flash & error messages
+// --------------------------------------------------
+
+
+#errorExplanation,
+.flash,
+.nodata,
+.warning,
+.conflict {
+  @extend %fa-icon;
+  margin-bottom: $line-height-computed;
+  padding: $padding-large-vertical $padding-large-horizontal;
+  padding-left: $padding-large-horizontal + 8px + 16px;
+  border: 1px solid;
+  border-radius: $border-radius-large;
+  background-repeat: no-repeat;
+  background-position: $padding-large-horizontal 50%;
+
+  &::before {
+    margin-left: -(8px + 16px);
+    float: left;
+    line-height: $line-height-computed;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+@mixin flash($color, $background, $border, $link, $icon) {
+  border-color: $border;
+  background-color: $background;
+  color: $color;
+
+  @if $icon == "true" {
+    $icon: $fa-var-check;
+  } @else if $icon == "warning" {
+    $icon: $fa-var-warning;
+  } @else if $icon == "exclamation" {
+    $icon: $fa-var-exclamation-circle;
+  }
+
+  &::before {
+    content: $icon;
+  }
+
+  a {
+    color: $link;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.warning,
+.conflict,
+.nodata {
+  @include flash($flash-warning-text, $flash-warning-bg, $flash-warning-border, $flash-warning-link, "warning");
+}
+
+.flash.notice {
+  @include flash($flash-success-text, $flash-success-bg, $flash-success-border, $flash-success-link, "true");
+}
+
+#errorExplanation,
+.flash.error {
+  @include flash($flash-error-text, $flash-error-bg, $flash-error-border, $flash-error-link, "exclamation");
+}
+
+.nodata {
+  padding-left: $padding-large-horizontal;
+  text-align: center;
+
+  &.nodata-left {
+    &::before {
+      float: left;
+    }
+  }
+
+  &::before {
+    margin-left: 0;
+    float: none;
+  }
+}
+
+#errorExplanation {
+  h2,
+  p {
+    display: none;
+  }
+}

@@ -1,0 +1,15 @@
+// Clearfix
+//
+// Source: http://cssmojo.com/the-very-latest-clearfix-reloaded/
+
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+%clearfix {
+  @include clearfix;
+}

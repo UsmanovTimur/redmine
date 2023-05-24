@@ -1,0 +1,93 @@
+@if $enable-sidebar-toggler {
+  #main {
+    // Fix full screen view for dashboard plugin
+    // https://github.com/jgraichen/redmine_dashboard
+    @at-root .controller-rdb_taskboard & {
+      position: static;
+    }
+  }
+
+  #sidebar {
+    @if $fixed-layout {
+      will-change: margin, opacity;
+      transition: margin .5s, opacity .5s;
+      opacity: 1;
+    } @else {
+      will-change: margin;
+      transition: margin .5s;
+    }
+
+    &.sidebar-hiding {
+      @if $fixed-layout {
+        opacity: 0;
+      }
+      @if $sidebar-position == "left" {
+        margin-left: -$sidebar-width;
+      } @else {
+        margin-right: -$sidebar-width;
+      }
+    }
+
+    &.sidebar-hidden {
+      display: none;
+    }
+  }
+
+  .sidebar-toggler {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    bottom: -1px;
+    width: 14px;
+    height: 16px;
+    transform: translateY(100%);
+    border: 2px solid $gray-700;
+    border-radius: $border-radius-base;
+    background-color: $gray-200;
+    background-position: center;
+    line-height: 1;
+    user-select: none;
+
+    @media print {
+      display: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $gray-300;
+    }
+
+    @if $sidebar-position == "left" {
+      left: 0;
+      background-image: inline-svg("chevron-left.svg", (path: (fill: $gray-700)));
+
+      @if not $fixed-layout {
+        border-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    } @else {
+      right: 0;
+      background-image: inline-svg("chevron-right.svg", (path: (fill: $gray-700)));
+
+      @if not $fixed-layout {
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    &.sidebar-hidden {
+      @if $sidebar-position == "left" {
+        background-image: inline-svg("chevron-right.svg", (path: (fill: $gray-700)));
+      } @else {
+        background-image: inline-svg("chevron-left.svg", (path: (fill: $gray-700)));
+      }
+    }
+  }
+} @else {
+  .sidebar-toggler {
+    display: none;
+  }
+}

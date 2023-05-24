@@ -1,0 +1,149 @@
+.drdn {
+  position: relative;
+
+  &.expanded {
+    > .drdn-content {
+      display: block;
+    }
+  }
+
+  &-trigger {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &-content {
+    @include nice-shadow(2);
+    display: none;
+    position: absolute;
+    z-index: 1002;
+    top: $input-height-base + $btn-padding-vertical;
+    right: 0;
+    min-width: 150px;
+    overflow: hidden;
+    border-radius: $border-radius-base;
+    background: $body-bg;
+  }
+
+  &-items {
+    max-height: 400px;
+    overflow: auto;
+    color: $gray-600;
+
+    &:empty {
+      border: 0;
+    }
+
+    &.selection {
+      > a,
+      > span {
+        @extend %fa-icon;
+
+        &::before {
+          content: " ";
+          display: inline-block;
+          width: 1em;
+          font-weight: $font-weight-bold;
+        }
+      }
+
+      > .selected::before {
+        content: $fa-var-check;
+      }
+    }
+
+    > * {
+      display: block;
+      margin: 1px;
+      padding: ($btn-padding-vertical - 1px) ($btn-padding-horizontal-small - 1px);
+      border-radius: $border-radius-base - 1px;
+
+      &.icon {
+        padding-left: $icon-width + $btn-padding-horizontal-small;
+
+        &::before {
+          width: $icon-width;
+          margin-top: 3px;
+          float: left;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.contextual {
+  .drdn-items {
+    padding: 3px;
+
+    a,
+    span {
+      padding-top: $pagination-padding-vertical;
+      padding-bottom: $pagination-padding-vertical;
+      border: 1px solid transparent;
+      border-radius: $border-radius-small;
+      color: $pagination-color;
+
+      &:hover,
+      &:focus {
+        border-color: $pagination-hover-border;
+        background-color: $pagination-hover-bg;
+        color: $pagination-hover-color;
+        text-decoration: none;
+
+        &.icon-del {
+          color: map-get(map-get($icon-color-map, danger), normal);
+        }
+      }
+    }
+  }
+
+  &:not(.journal-actions) > .drdn {
+    &.expanded {
+      > .drdn-trigger {
+        border-color: $pagination-active-border;
+        background-color: $pagination-active-bg;
+        color: $pagination-active-color;
+      }
+    }
+
+    .drdn-trigger {
+      padding: $btn-padding-vertical $btn-padding-horizontal-small;
+      border: 1px solid $pagination-border;
+      border-radius: $border-radius-base;
+      background-color: $pagination-bg;
+      box-shadow: none;
+      color: $pagination-color;
+      text-align: center;
+
+      > .icon-only {
+        margin: 0 -4px;
+      }
+
+      &:hover,
+      &:focus {
+        border-color: $pagination-hover-border;
+        background-color: $pagination-hover-bg;
+        color: $pagination-hover-color;
+      }
+    }
+  }
+}
+
+.journal-actions {
+  .drdn-trigger {
+    color: map-get(map-get($icon-color-map, default), normal);
+  }
+
+  .drdn-trigger:hover,
+  .drdn.expanded .drdn-trigger {
+    color: map-get(map-get($icon-color-map, default), hover);
+  }
+
+  .drdn-content {
+    top: $input-height-base;
+  }
+}

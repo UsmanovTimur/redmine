@@ -1,0 +1,854 @@
+@use "sass:math";
+
+//
+// Variables
+// --------------------------------------------------
+
+// stylelint-disable indentation
+
+//== Some key attributes
+//
+
+$fixed-layout:                  false !default;
+$css-grid-layout:               false !default;
+$flexbox-layout:                true !default;
+$sidebar-position:              left !default;
+$clean-issues:                  true !default;
+$color-trackers:                true !default;
+$color-status:                  true !default;
+$color-priorities:              false !default;
+$priority-icon:                 true !default;
+$use-gravatars:                 true !default;
+$use-logo:                      false !default;
+$use-retina-logo:               false !default;
+$use-project-tiles:             true !default;
+$issue-subject-large:           true !default;
+$enable-sidebar-toggler:        true !default;
+$wiki-page-more-vertical-space: true !default;
+$top-menu-collapse:             false !default;
+$agile-board-customize:         true !default;
+
+
+//== Colors
+//
+
+$blue:                          #0065ff !default;
+$indigo:                        #4e65e5 !default;
+$purple:                        #614ba6 !default;
+$pink:                          #eb5286 !default;
+$red:                           #e5123d !default;
+$orange:                        #fc8c12 !default;
+$yellow:                        #ffc107 !default;
+$green:                         #029934 !default;
+$teal:                          #00b3ad !default;
+
+$white:                         #fff !default;
+$black:                         #000 !default;
+$gray:                          hsl(hue($indigo), 20%, 85%) !default;
+
+$shade-map: (
+  50:                           87.5%,
+  100:                          80%,
+  200:                          65%,
+  300:                          40%,
+  400:                          20%,
+  500:                          0%,
+  600:                          20%,
+  700:                          40%,
+  800:                          65%,
+  900:                          80%,
+  950:                          87.5%
+) !default;
+
+@function shade($color, $shade: 500) {
+  $mixer: if($shade < 500, $white, $black);
+  $saturation: if($shade < 500, 0, math.div($shade - 500, 20));
+  @return saturate(mix($mixer, $color, map-get($shade-map, $shade)), $saturation);
+}
+
+$gray-50:                       shade($gray, 50) !default;
+$gray-100:                      shade($gray, 100) !default;
+$gray-200:                      shade($gray, 200) !default;
+$gray-300:                      shade($gray, 300) !default;
+$gray-400:                      shade($gray, 400) !default;
+$gray-500:                      $gray !default;
+$gray-600:                      shade($gray, 600) !default;
+$gray-700:                      shade($gray, 700) !default;
+$gray-800:                      shade($gray, 800) !default;
+$gray-900:                      shade($gray, 900) !default;
+$gray-950:                      shade($gray, 950) !default;
+
+$brand-primary:                 $purple !default;
+$brand-text:                    $white !default;
+$brand-accent:                  shade($brand-primary, 100) !default;
+
+$brand-success:                 $green !default;
+$brand-info:                    $blue !default;
+$brand-warning:                 $orange !default;
+$brand-danger:                  $red !default;
+
+$state-success:                 shade($green, 100) !default;
+$state-info:                    shade($blue, 100) !default;
+$state-warning:                 shade($orange, 100) !default;
+$state-danger:                  shade($red, 100) !default;
+
+
+//== Scaffolding
+//
+
+$body-bg:                       $white !default;
+$text-color:                    $gray-800 !default;
+
+$link-color:                    shade($blue, 600) !default;
+$link-hover-color:              $blue !default;
+$link-hover-decoration:         underline !default;
+$link-closed-decoration:        line-through !default;
+$link-color-issue-closed:       $gray-700 !default;
+$link-color-project-closed:     $gray-700 !default;
+$link-color-user-locked:        $gray-700 !default;
+
+
+//== Typography
+//
+
+$font-family-sans-serif:        system-ui,
+                                /* macOS 10.11-10.12 */ -apple-system,
+                                /* Windows 6+ */ Segoe UI,
+                                /* Android 4+ */ Roboto,
+                                /* Ubuntu 10.10+ */ Ubuntu,
+                                /* Gnome 3+ */ Cantarell,
+                                /* KDE Plasma 5+ */ Noto Sans,
+                                /* fallback */ sans-serif,
+                                /* macOS emoji */ "Apple Color Emoji",
+                                /* Windows emoji */ "Segoe UI Emoji",
+                                /* Windows emoji */ "Segoe UI Symbol",
+                                /* Linux emoji */ "Noto Color Emoji" !default;
+
+$font-family-monospace:         /* macOS 10.10+ */ Menlo,
+                                /* Windows 6+ */ Consolas,
+                                /* Android 4+ */ Roboto Mono,
+                                /* Ubuntu 10.10+ */ Ubuntu Monospace,
+                                /* KDE Plasma 5+ */ Noto Mono,
+                                /* KDE Plasma 4+ */ Oxygen Mono,
+                                /* Linux/OpenOffice fallback */ Liberation Mono,
+                                /* fallback */ monospace !default;
+
+$font-family-base:              $font-family-sans-serif !default;
+$font-weight-normal:            normal !default;
+$font-weight-semi-bold:         500 !default;
+$font-weight-bold:              600 !default;
+
+$font-size-base:                14px !default;
+$font-size-large:               1.285em !default;
+$font-size-large-px:            18px !default;
+$font-size-small-unitless:      .86 !default;
+$font-size-small:               $font-size-small-unitless * 1em !default;
+$font-size-small-px:            floor($font-size-small-unitless * $font-size-base) !default;
+
+$font-size-h1:                  2.25em !default;
+$font-size-h2:                  1.75em !default;
+$font-size-h3:                  1.5em !default;
+$font-size-h4:                  1.286em !default;
+$font-size-h5:                  1em !default;
+$font-size-h6:                  1em !default;
+
+$line-height-base:              1.428571429 !default; // 20/14
+$line-height-large:             1.33 !default;
+$line-height-computed:          floor(($font-size-base * $line-height-base)) !default; // ~20px
+
+$headings-font-weight:          600 !default;
+$headings-line-height:          1.4 !default;
+$headings-anchor-color:         $gray-400 !default;
+$headings-anchor-color-active:  $gray-600 !default;
+
+
+//== Wiki
+//
+
+$wiki-text:                     $gray-950 !default;
+$wiki-font-size:                16px !default;
+$wiki-line-height:              1.6 !default;
+$wiki-preview-bg:               $body-bg !default;
+
+$toc-bg:                        $gray-50 !default;
+$toc-border:                    $gray-300 !default;
+$toc-text:                      $text-color !default;
+$toc-link:                      $link-color !default;
+$toc-link-hover:                $link-hover-color !default;
+$toc-shadow:                    0 1px 3px rgba($black, .07) !default;
+$toc-active-link:               darken($link-color, 10%) !default;
+$toc-active-link-hover:         shade($toc-active-link, 700) !default;
+$toc-active-border:             $link-color !default;
+
+
+//== Components
+//
+
+$padding-base-vertical:         6px !default;
+$padding-base-horizontal:       12px !default;
+$padding-large-vertical:        10px !default;
+$padding-large-horizontal:      16px !default;
+$padding-small-vertical:        5px !default;
+$padding-small-horizontal:      10px !default;
+
+$padding-side:                  20px !default;
+$padding-wiki:                  20px !default;
+
+$border-radius-base:            3px !default;
+$border-radius-large:           4px !default;
+$border-radius-small:           2px !default;
+
+$hr-border:                     $gray-600 !default;
+$abbr-border-color:             $gray-600 !default;
+$blockquote-border-color:       rgba($black, .15) !default;
+
+$component-color:               $text-color !default;
+$component-bg:                  $gray-50 !default;
+$component-border:              $gray-300 !default;
+
+$component-active-color:        $brand-text !default;
+$component-active-bg:           $brand-primary !default;
+$component-active-border:       $brand-primary !default;
+
+$font-size-list:                .92em !default;
+
+$transition-time:               50ms !default;
+$transition-time-long:          150ms !default;
+
+$collapsible-animation-time:    300ms !default;
+$collapsible-max-height:        10000px !default;
+
+
+//== Tables
+//
+
+$table-cell-padding:            8px !default;
+$table-condensed-cell-padding:  5px !default;
+
+$table-list-header-bg:          $body-bg !default;
+$table-list-header-border:      0 0 2px !default;
+$table-list-item-border:        0 !default;
+$table-list-color-odd-rows:     true !default;
+$table-list-color-even-rows:    false !default;
+$table-list-highlight-rows:     true !default;
+
+$table-bg:                      transparent !default;
+$table-accent-factor:           .15 !default;
+$table-hover-factor:            .4 !default;
+$table-bg-accent:               rgba($gray-500, $table-accent-factor) !default;
+$table-bg-hover:                rgba($gray-500, $table-hover-factor) !default;
+$table-bg-active:               $table-bg-hover !default;
+
+$table-border-color:            $gray-300 !default;
+
+$table-color-odd-factor:        if($table-list-color-odd-rows, $table-accent-factor * .8, $table-accent-factor * .5) !default;
+$table-color-even-factor:       if($table-list-color-even-rows, $table-accent-factor * .8, $table-accent-factor * .5) !default;
+$table-color-hover-factor:      $table-hover-factor * .5 !default;
+$table-color-border-shade:      100 !default;
+
+
+//== Issue statuses
+//
+
+$status-default-bg:             $brand-primary !default;
+$status-default-color:          $brand-text !default;
+$status-default-colors-map: (
+  status-1: (
+    background:                 shade($blue, 500),
+    color:                      $white
+  ),
+  closed: (
+    background:                 shade($red, 500),
+    color:                      $white
+  )
+) !default;
+$status-custom-colors-map:      () !default;
+$status-colors-map:             map-merge($status-default-colors-map, $status-custom-colors-map);
+
+
+//== Trackers priorities
+//
+
+$priority-icon-size:            14px !default;
+$priority-icon-space:           5px !default;
+$priority-default-icons-map: (
+  lowest: (
+    icon:                       "priority-minor.svg",
+    color:                      $green
+  ),
+  low2: (
+    icon:                       "priority-lowest.svg",
+    color:                      mix($teal, $green)
+  ),
+  low3: (
+    icon:                       "priority-low.svg",
+    color:                      $teal
+  ),
+  default: (
+    icon:                       "priority-medium.svg",
+    color:                      $blue
+  ),
+  high5: (
+    icon:                       "priority-high.svg",
+    color:                      $purple
+  ),
+  high4: (
+    icon:                       "priority-high.svg",
+    color:                      $orange
+  ),
+  high3: (
+    icon:                       "priority-highest.svg",
+    color:                      mix($red, $orange)
+  ),
+  high2: (
+    icon:                       "priority-major.svg",
+    color:                      $red
+  ),
+  highest: (
+    icon:                       "priority-critical.svg",
+    color:                      shade($red, 600)
+  )
+) !default;
+$priority-custom-icons-map:     () !default;
+$priority-icons-map:            map-merge($priority-default-icons-map, $priority-custom-icons-map);
+
+$priority-default-color-map: (
+  lowest: (
+    border:                     shade($green, $table-color-border-shade),
+    background:                 $green,
+    color:                      $text-color,
+    link:                       shade($green, 700),
+  ),
+  low2: (
+    border:                     shade(mix($teal, $green), $table-color-border-shade),
+    background:                 mix($teal, $green),
+    color:                      $text-color,
+    link:                       shade(mix($teal, $green), 700),
+  ),
+  low3: (
+    border:                     shade($teal, $table-color-border-shade),
+    background:                 $teal,
+    color:                      $text-color,
+    link:                       shade($teal, 700),
+  ),
+  default: (
+    border:                     shade($blue, $table-color-border-shade),
+    background:                 $blue,
+    color:                      $text-color,
+    link:                       shade($blue, 700),
+  ),
+  high5: (
+    border:                     shade($purple, $table-color-border-shade),
+    background:                 $purple,
+    color:                      $text-color,
+    link:                       shade($purple, 700),
+  ),
+  high4: (
+    border:                     shade($orange, $table-color-border-shade),
+    background:                 $orange,
+    color:                      $text-color,
+    link:                       shade($orange, 700),
+  ),
+  high3: (
+    border:                     shade(mix($red, $orange), $table-color-border-shade),
+    background:                 mix($red, $orange),
+    color:                      $text-color,
+    link:                       shade(mix($red, $orange), 700),
+  ),
+  high2: (
+    border:                     shade($red, $table-color-border-shade),
+    background:                 $red,
+    color:                      $text-color,
+    link:                       shade($red, 700),
+  ),
+  highest: (
+    border:                     shade($red, $table-color-border-shade),
+    background:                 $red,
+    color:                      $text-color,
+    link:                       shade($red, 700),
+  )
+) !default;
+$priority-custom-color-map:     () !default;
+$priority-color-map:            map-merge($priority-default-color-map, $priority-custom-color-map);
+
+
+//== Trackers links
+//
+
+$tracker-inline-padding:        1px 5px !default;
+$tracker-list-padding:          0 6px !default;
+
+$tracker-default-bg:            $gray-700 !default;
+$tracker-default-text:          $white !default;
+
+$tracker-default-colors-map: (
+  1: (
+    background:                 $red,
+    color:                      $white
+  ),
+  2: (
+    background:                 $blue,
+    color:                      $white
+  ),
+  3: (
+    background:                 $green,
+    color:                      $white
+  ),
+  4: (
+    background:                 $purple,
+    color:                      $white
+  ),
+  5: (
+    background:                 $orange,
+    color:                      $white
+  ),
+  6: (
+    background:                 $teal,
+    color:                      $white
+  ),
+  7: (
+    background:                 $indigo,
+    color:                      $white
+  )
+) !default;
+$tracker-custom-colors-map:     () !default;
+$tracker-colors-map:            map-merge($tracker-default-colors-map, $tracker-custom-colors-map);
+
+
+//== Diffs
+//
+
+$diff-out-bg:                   saturate(shade($red, 100), 50%) !default;
+$diff-out-bg-light:             rgba($diff-out-bg, .4) !default;
+
+$diff-in-bg:                    saturate(shade($green, 100), 50%) !default;
+$diff-in-bg-light:              rgba($diff-in-bg, .4) !default;
+
+
+//== Journal changes
+//
+
+$journal-old-value-color:       saturate(shade($orange, 800), 25%) !default;
+$journal-old-value-bg:          saturate(shade($orange, 50), 50%) !default;
+$journal-new-value-color:       saturate(shade($green, 800), 25%) !default;
+$journal-new-value-bg:          saturate(shade($green, 50), 50%) !default;
+
+
+//== Changesets
+//
+
+$changeset-added-color:         $green !default;
+$changeset-modified-color:      $orange !default;
+$changeset-copied-color:        $purple !default;
+$changeset-renamed-color:       $blue !default;
+$changeset-deleted-color:       $red !default;
+
+
+//== Buttons
+//
+
+$btn-font-weight:               normal !default;
+$btn-padding-vertical:          3px !default;
+$btn-padding-horizontal:        12px !default;
+$btn-padding-horizontal-small:  8px !default;
+
+$btn-link-color:                $link-color !default;
+$btn-link-bg:                   $body-bg !default;
+$btn-link-border:               $body-bg !default;
+
+$btn-default-color:             $gray-900 !default;
+$btn-default-bg:                $gray-100 !default;
+$btn-default-border:            $gray-500 !default;
+$btn-default-icon-color:        $gray-700 !default;
+
+$btn-primary-color:             $white !default;
+$btn-primary-bg:                $blue !default;
+$btn-primary-border:            $btn-primary-bg !default;
+
+$btn-success-color:             $white !default;
+$btn-success-bg:                $green !default;
+$btn-success-border:            $btn-success-bg !default;
+
+
+//== Action icons
+//
+
+$icon-width:                    20px !default;
+$icon-opacity:                  .7 !default;
+$icon-hover-opacity:            1 !default;
+$icon-color-map: (
+  default: (
+    normal:                     shade($brand-info, 600),
+    hover:                      shade($brand-info, 500)
+  ),
+  success: (
+    normal:                     shade($brand-success, 600),
+    hover:                      shade($brand-success, 500)
+  ),
+  danger: (
+    normal:                     shade($brand-danger, 600),
+    hover:                      shade($brand-danger, 500)
+  )
+) !default;
+
+
+//== Highlights
+//
+
+$highlight-bg:                  shade($yellow, 200) !default;
+$highlight-border:              shade($yellow, 600) !default;
+$highlight-text:                shade($yellow, 800) !default;
+$highlight-link:                mix($yellow, $link-color) !default;
+
+
+//== Forms
+//
+
+$input-bg:                      $white !default;
+$input-bg-disabled:             $gray-300 !default;
+
+$input-color:                   $text-color !default;
+$input-border:                  $gray-500 !default;
+
+$input-border-radius:           $border-radius-small !default;
+$input-border-radius-large:     $border-radius-large !default;
+
+$input-border-focus:            saturate($brand-primary, 25%) !default;
+$input-border-focus-alpha:      .6 !default;
+$input-shadow-focus-alpha:      .2 !default;
+$input-color-placeholder:       $gray-600 !default;
+
+$input-padding-vertical:        $btn-padding-vertical !default;
+$input-padding-horizontal:      8px !default;
+
+$input-height-base:             ($line-height-computed + ($input-padding-vertical * 2) + 2) !default;
+
+$label-width:                   160px !default;
+$label-wide-width:              280px !default;
+$label-space:                   10px !default;
+
+$legend-color:                  $gray-800 !default;
+$legend-border-color:           $gray-200 !default;
+
+$check-input-gutter:            18px !default;
+$check-input-margin-vertical:   3px !default;
+$check-input-margin-btn-v:      7px !default;
+$check-input-margin-horizontal: 8px !default;
+
+$check-list-max-height:         20 * $line-height-computed;
+$check-list-offset-top:         $input-padding-vertical + 1px;
+
+//== Top
+//
+
+$top-menu-bg:                   shade($brand-primary, 700) !default;
+$top-menu-text:                 shade($brand-primary, 100) !default;
+$top-menu-link:                 shade($brand-primary, 100) !default;
+$top-menu-link-hover:           shade($brand-primary, 50) !default;
+
+$header-bg:                     $brand-primary !default;
+$header-text:                   $brand-text !default;
+$header-link:                   $brand-text !default;
+$header-root:                   $brand-accent !default;
+$header-padding-vertical:       10px !default;
+$header-padding-horizontal:     $padding-side !default;
+$header-title-size:             $font-size-h3 !default;
+$header-title-line-height:      $line-height-computed * 1.5 !default;
+
+$responsive-header-height:      54px !default;
+
+$flyout-menu-bg:                shade($header-bg, 700) !default;
+$flyout-menu-text:              $white !default;
+$flyout-menu-link:              $white !default;
+$flyout-menu-link-active-bg:    shade($header-bg, 50) !default;
+$flyout-menu-link-active:       $text-color !default;
+$flyout-menu-header-bg:         shade($header-bg, 800) !default;
+$flyout-menu-header-border:     shade($header-bg, 800) !default;
+$flyout-menu-header-text:       $white !default;
+
+$quick-search-width:            200px !default;
+$quick-search-border:           shade($header-bg, 800) !default;
+$quick-search-border-focus:     shade($header-bg, 400) !default;
+$quick-search-box-width:        300px !default;
+$quick-search-dropdown-bg:      $body-bg !default;
+$quick-search-dropdown-border:  $gray-400 !default;
+
+$logo-image-width:              60px !default;
+$logo-image-height:             40px !default;
+$logo-position-horizontal:      $header-padding-vertical !default;
+$logo-position-vertical:        center !default;
+$logo-space:                    floor($header-padding-vertical * .5) !default;
+
+$main-menu-bg:                  $gray-100 !default;
+$main-menu-bg-hover:            $gray-100 !default;
+$main-menu-bg-active:           transparent !default;
+$main-menu-link:                $gray-900 !default;
+$main-menu-link-active:         $black !default;
+$main-menu-border:              $gray-400 !default;
+$main-menu-shadow-hover:        $gray-600 !default;
+$main-menu-shadow-width:        3px !default;
+$main-menu-shadow-active:       $brand-primary !default;
+$main-menu-padding-vertical:    $padding-large-vertical !default;
+$main-menu-padding-horizontal:  5px !default;
+$main-menu-dropdown-bg:         $gray-50;
+
+
+//== Pagination
+//
+
+$pagination-padding-vertical:   $btn-padding-vertical !default;
+$pagination-padding-horizontal: 10px !default;
+
+$pagination-color:              $gray-900 !default;
+$pagination-bg:                 $gray-200 !default;
+$pagination-border:             $gray-200 !default;
+
+$pagination-hover-color:        $gray-900 !default;
+$pagination-hover-bg:           $gray-300 !default;
+$pagination-hover-border:       $gray-300 !default;
+
+$pagination-active-color:       $brand-text !default;
+$pagination-active-bg:          $brand-primary !default;
+$pagination-active-border:      $brand-primary !default;
+
+$pagination-inactive-color:     $gray-500 !default;
+$pagination-inactive-bg:        $gray-50 !default;
+$pagination-inactive-border:    $gray-100 !default;
+
+
+//== Tabs
+//
+
+$tab-padding-vertical:          5px !default;
+$tab-padding-horizontal:        8px !default;
+$tab-border:                    $gray-500 !default;
+$tab-hover-bg:                  $gray-100 !default;
+$tab-hover-text:                $gray-950 !default;
+$tab-hover-border:              $tab-hover-bg !default;
+$tab-active-bg:                 $body-bg !default;
+$tab-active-text:               $text-color !default;
+$tab-active-border:             $tab-border !default;
+
+
+//== Content and sidebar
+//
+
+$sidebar-width:                 270px !default;
+$sidebar-padding-vertical:      $padding-base-vertical !default;
+$sidebar-padding-horizontal:    $padding-side !default;
+$sidebar-width-computed:        $sidebar-width - ($sidebar-padding-horizontal * 2) - 1px !default;
+$sidebar-link-hover-bg:         $gray-200 !default;
+$sidebar-link-hover-text:       $gray-900 !default;
+$sidebar-link-active-bg:        $body-bg !default;
+$sidebar-link-active-border:    $gray-400 !default;
+$sidebar-link-active-side:      $red !default;
+$sidebar-link-active-text:      $gray-950 !default;
+
+
+//== Flash messages (alerts)
+//
+
+$flash-success-bg:              shade($green, 400) !default;
+$flash-success-border:          shade($green, 500) !default;
+$flash-success-text:            $white !default;
+$flash-success-link:            $white !default;
+
+$flash-info-bg:                 shade($blue, 100) !default;
+$flash-info-border:             shade($blue, 200) !default;
+$flash-info-text:               shade($blue, 800) !default;
+$flash-info-link:               shade($blue, 900) !default;
+
+$flash-warning-bg:              shade($yellow, 200) !default;
+$flash-warning-border:          shade($yellow, 300) !default;
+$flash-warning-text:            shade($yellow, 800) !default;
+$flash-warning-link:            shade($yellow, 900) !default;
+
+$flash-error-bg:                $red !default;
+$flash-error-border:            shade($red, 600) !default;
+$flash-error-text:              $white !default;
+$flash-error-link:              $white !default;
+
+
+//== Progress bars
+//
+
+$progress-height:               12px !default;
+$progress-bg:                   rgba($gray-500, .5) !default;
+$progress-bar-bg:               $brand-primary !default;
+$progress-bar-success-bg:       $brand-success !default;
+$progress-bar-danger-bg:        $brand-danger !default;
+$progress-bar-info-bg:          $brand-info !default;
+
+
+//== Panels
+//
+
+$panel-body-padding-vertical:   15px !default;
+$panel-body-padding-horizontal: 15px !default;
+$panel-body-padding:            $panel-body-padding-vertical $panel-body-padding-horizontal !default;
+$panel-color:                   $text-color !default;
+$panel-bg:                      $gray-50 !default;
+$panel-border:                  $gray-400 !default;
+$panel-border-radius:           $border-radius-base !default;
+$panel-shadow:                  0 1px 2px rgba($black, .07),
+                                0 3px 8px rgba($black, .04) !default;
+
+
+//== Tooltips
+//
+
+$tooltip-bg:                    $white !default;
+$tooltip-border-width:          0 !default;
+$tooltip-border:                $gray-500 !default;
+$tooltip-text:                  $gray-800 !default;
+$tooltip-link:                  $link-color !default;
+
+
+//== Issue
+//
+
+$issue-bg:                      $gray-50 !default;
+$issue-border:                  $gray-500 !default;
+$issue-text:                    $text-color !default;
+
+$issue-padding:                 15px !default;
+$issue-gravatar-size:           50px !default;
+$issue-heading-size:            1.75 !default;
+
+$issue-attribute-padding-v:     3px !default;
+$issue-attribute-padding-h:     5px !default;
+
+
+//== Speech "bubbles"
+//
+
+$bubble-bg:                     $issue-bg !default;
+$bubble-border:                 $issue-border !default;
+$bubble-text:                   $issue-text !default;
+$bubble-gravatar-size:          24px !default;
+$bubble-gravatar-space:         12px !default;
+$bubble-padding-vertical:       8px !default;
+$bubble-padding-horizontal:     12px !default;
+$bubble-target-border:          saturate($brand-primary, 25%) !default;
+$bubble-target-shadow-alpha:    .2 !default;
+
+
+//== Badges
+//
+
+$badge-space:                   2px !default;
+$badge-padding-v:               0 !default;
+$badge-padding-h:               5px !default;
+$badge-border-radius:           $border-radius-base !default;
+$badge-font-size:               $font-size-small !default;
+$badge-font-weight:             $font-weight-bold !default;
+
+
+//== Media queries breakpoints
+//
+
+$screen-xs:                     480px !default;
+$screen-xs-min:                 $screen-xs !default;
+
+$screen-sm:                     768px !default;
+$screen-sm-min:                 $screen-sm !default;
+
+$screen-md:                     992px !default;
+$screen-md-min:                 $screen-md !default;
+
+$screen-lg:                     1200px !default;
+$screen-lg-min:                 $screen-lg !default;
+
+$screen-xs-max:                 ($screen-sm-min - 1) !default;
+$screen-sm-max:                 ($screen-md-min - 1) !default;
+$screen-md-max:                 ($screen-lg-min - 1) !default;
+
+$redmine-responsive-max:        899px !default;
+$redmine-responsive-min:        900px !default;
+
+$top-menu-collapse-breakpoint:  $screen-lg-min !default;
+
+
+//== Login form
+//
+
+$login-form-width:              24em !default;
+$login-form-label-width:        8em !default;
+$login-form-box-breakpoint:     $screen-xs-min !default;
+$login-form-adjustments-map: (
+  -2: da en en-GB ko pl tr uk,
+  1: fr hr nl sr-YU sv,
+  2: el eu lt pt sk sr th
+) !default;
+
+
+//== Content widths
+//
+
+$width-sm:                      $screen-sm - ($padding-side * 2) !default;
+$width-md:                      $screen-md - ($padding-side * 2) !default;
+$width-lg:                      $screen-lg - ($padding-side * 2) !default;
+
+
+//== Redmine Agile plugin
+// https://www.redmineup.com/pages/plugins/agile
+//
+
+$agile-board-background:        $gray-100 !default;
+$agile-issue-card-margin:       8px 10px !default;
+$agile-issue-card-padding:      7px !default;
+$agile-issue-card-border:       $gray-500;
+$agile-issue-card-border-width: 0 0 0 5px;
+$agile-issue-card-border-radius: $border-radius-large !default;
+$agile-issue-card-background:   $white !default;
+$agile-issue-card-color:        $text-color !default;
+$agile-issue-card-closed-background: $gray-300 !default;
+$agile-issue-card-default-color-map: (
+  bk-green: (
+    border: $green,
+    background: scale-color($green, $saturation: -5%, $lightness: 80%),
+    link: shade($green, 700),
+  ),
+  bk-blue: (
+    border: $blue,
+    background: scale-color($blue, $saturation: 50%, $lightness: 80%),
+    link: shade($blue, 700),
+  ),
+  bk-turquoise: (
+    border: $teal,
+    background: scale-color($teal, $saturation: -5%, $lightness: 80%),
+    link: shade($teal, 700),
+  ),
+  bk-lightgreen: (
+    border: adjust-color($green, $hue: -45deg),
+    background: scale-color(adjust-color($green, $hue: -45deg), $saturation: 75%, $lightness: 80%),
+    link: shade(adjust-color($green, $hue: -45deg), 700),
+  ),
+  bk-yellow: (
+    border: adjust-color($yellow, $hue: 2deg),
+    background: scale-color(adjust-color($yellow, $hue: 2deg), $saturation: 75%, $lightness: 80%),
+    link: shade($yellow, 700),
+  ),
+  bk-orange: (
+    border: $orange,
+    background: scale-color($orange, $saturation: 75%, $lightness: 80%),
+    link: shade($orange, 700),
+  ),
+  bk-red: (
+    border: $red,
+    background: scale-color($red, $saturation: 75%, $lightness: 85%),
+    link: shade($red, 700),
+  ),
+  bk-purple: (
+    border: $purple,
+    background: scale-color($purple, $saturation: 75%, $lightness: 85%),
+    link: shade($purple, 700),
+  ),
+  bk-gray: (
+    border: $gray-600,
+    background: $gray-300,
+    link: $link-color,
+  ),
+) !default;
+$agile-issue-card-custom-color-map: () !default;
+$agile-issue-card-color-map:    map-merge($agile-issue-card-default-color-map, $agile-issue-card-custom-color-map);

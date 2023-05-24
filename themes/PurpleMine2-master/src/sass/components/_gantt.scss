@@ -1,0 +1,269 @@
+//
+// Gantt chart
+// --------------------------------------------------
+
+div.gantt_content {
+  overflow: auto;
+}
+
+.controller-gantts form + table,
+table.gantt-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 0;
+    vertical-align: top;
+  }
+}
+
+.gantt_hdr {
+  position: absolute;
+  top: 0;
+  height: 16px;
+  overflow: hidden;
+  border: 1px solid $gray-500;
+  text-align: center;
+
+  &[style*="background"] {
+    background: $gray-200 !important; // stylelint-disable-line declaration-no-important
+  }
+
+  &.nwday {
+    background-color: $gray-200;
+    color: $gray-950;
+  }
+
+  #gantt_area & {
+    border-right-width: 1px;
+    border-left-width: 0;
+  }
+
+  .gantt_subjects_container:not(.draw_selected_columns) &,
+  .last_gantt_selected_column & {
+    z-index: 1;
+  }
+}
+
+.gantt_subjects_container .gantt_subjects {
+  z-index: 2;
+}
+
+.last_gantt_selected_column .gantt_selected_column_container,
+.gantt_subjects_container .gantt_subjects * {
+  z-index: 10;
+}
+
+.gantt_subjects_column {
+  .gantt_hdr {
+    border-left: 1px solid $gray-500 !important; // stylelint-disable-line declaration-no-important
+  }
+
+  + td {
+    padding: 0;
+  }
+}
+
+.gantt_subjects {
+  .issue-subject {
+    &:hover {
+      background-color: $table-bg-hover;
+    }
+
+    img.icon-gravatar {
+      float: none;
+    }
+  }
+}
+
+.gantt_hdr_selected_column_name {
+  @include text-overflow;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+  font-size: $font-size-small;
+}
+
+td.gantt_selected_column {
+  width: 60px;
+}
+
+td.gantt_selected_column .gantt_hdr,
+.gantt_selected_column_container {
+  width: 60px - 1px;
+  border-left-width: 0;
+}
+
+.gantt_subjects {
+  position: relative;
+  z-index: 1;
+  font-size: $font-size-small;
+}
+
+.gantt_selected_column_content {
+  div {
+    box-sizing: border-box;
+    padding-right: $table-condensed-cell-padding;
+    padding-left: $table-condensed-cell-padding;
+  }
+}
+
+.gantt_subjects,
+.gantt_selected_column_content {
+  div {
+    @include text-overflow;
+    width: 100%;
+    height: 16px;
+    line-height: 16px;
+  }
+}
+
+.task {
+  position: absolute;
+  height: 8px;
+  margin: 2px 0 0;
+  padding: 0;
+  font-size: 11px;
+  line-height: 16px;
+  white-space: nowrap;
+
+  &.label {
+    width: 100%;
+    margin-top: 0;
+
+    &.project,
+    &.version {
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  &.parent {
+    height: 3px;
+
+    &.marker {
+      &.starting {
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 8px;
+        height: 16px;
+        margin-left: -4px;
+        background: url("../../../images/task_parent_end.png") no-repeat 0 0;
+      }
+
+      &.ending {
+        position: absolute;
+        top: -1px;
+        right: 0;
+        width: 8px;
+        height: 16px;
+        margin-left: -4px;
+        background: url("../../../images/task_parent_end.png") no-repeat 0 0;
+      }
+    }
+  }
+}
+
+.task_late {
+  border: 1px solid darken($progress-bar-danger-bg, 10%);
+  background-color: $progress-bar-danger-bg;
+}
+
+.task_done {
+  border: 1px solid darken($progress-bar-success-bg, 10%);
+  background-color: $progress-bar-success-bg;
+}
+
+.task_todo {
+  border: 1px solid darken($progress-bg, 20%);
+  background-color: $progress-bg;
+
+  &.parent {
+    border: 1px solid darken($progress-bg, 30%);
+    background-color: darken($progress-bg, 10%);
+  }
+}
+
+.project,
+.version {
+  &.task_late,
+  &.task_done,
+  &.task_todo {
+    height: 2px;
+    margin-top: 3px;
+  }
+
+  &.task_todo {
+    border: 1px solid darken($progress-bar-info-bg, 10%);
+    background-color: $progress-bar-info-bg;
+  }
+
+  &.marker {
+    margin-top: 1px;
+    margin-left: -4px;
+    border: 0 none;
+    background-image: url("../../../images/version_marker.png");
+    background-repeat: no-repeat;
+  }
+}
+
+.version-behind-schedule,
+.issue-behind-schedule {
+  color: $brand-warning;
+
+  .context-menu-selection & {
+    color: $brand-text;
+  }
+}
+
+.version-overdue,
+.issue-overdue,
+.project-overdue {
+  color: $brand-danger;
+
+  .context-menu-selection & {
+    color: $brand-text;
+  }
+}
+
+
+//== Tooltips
+//
+
+.tooltip {
+  position: relative;
+  z-index: 24;
+
+  &:hover {
+    z-index: 25;
+
+    span.tip {
+      display: block;
+    }
+  }
+
+  span.tip {
+    @include nice-shadow(3);
+    display: none;
+    position: absolute;
+    top: 12px;
+    width: 270px;
+    padding: $padding-base-vertical;
+    border: $tooltip-border-width solid $tooltip-border;
+    border-radius: $border-radius-small;
+    background-color: $tooltip-bg;
+    color: $tooltip-text;
+    font-size: $font-size-small;
+    text-align: left;
+  }
+
+  @if $sidebar-position == "left" {
+    .list & {
+      span.tip {
+        right: 0;
+        left: auto;
+      }
+    }
+  }
+}

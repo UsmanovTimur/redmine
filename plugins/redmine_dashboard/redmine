@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+DEFAULT_VERSION = '5.0.5'
+
+REDMINE_VERSION = ENV['REDMINE_VERSION'] = ENV.fetch('REDMINE_VERSION') { ENV.fetch('VERSION') { DEFAULT_VERSION } }
+REDMINE_PATH    = ENV['REDMINE_PATH']    = File.expand_path("../vendor/redmine/#{REDMINE_VERSION}/", __FILE__)
+REDMINE_EXEC    = ENV['REDMINE_EXEC']    = File.expand_path(__FILE__)
+PLUGIN_PATH     = ENV['PLUGIN_PATH']     = File.expand_path(__dir__)
+
+require 'pathname'
+
+SCRIPT_PATH = Pathname.new(__FILE__).expand_path.parent.join('scripts')
+
+def help
+  <<-HELP.gsub(/^\s{4}/, '')
+    Available commands:
+      #{available_commands.join("\n  ")}
+  HELP
+end
+
+def available_commands
+  SCRIPT_PATH.children
+    .select(&:file?)
+    .select(&:executable?)
+    .map(&:basename)
+    .map(&:to_s)
+end
+
+def handle_command(cmd, _argv)
+  unless ARGV[0] =~ /\A(\w+)\z/
+    warn "Invalid command: #{ARGV[0]}"
+    warn help
+    Kernel.exit 1
+  end
+
+  command = SCRIPT_PATH.join(cmd.to_s)
+
+  if command.file? && command.executable?
+    Kernel.exec command.to_s, *ARGV[1..]
+  else
+    warn "Unknown command: #{ARGV[0]}"
+    warn help
+    Kernel.exit 1
+  end
+end
+
+case ARGV[0]
+  when '-h', '--help', nil
+    $stdout.puts help
+  when 'exec'
+    Dir.chdir(REDMINE_PATH) { Kernel.exec(*ARGV[1..]) }
+  else
+    handle_command ARGV[0], ARGV[1..]
+end

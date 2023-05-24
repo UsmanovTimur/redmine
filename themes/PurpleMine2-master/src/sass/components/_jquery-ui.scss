@@ -1,0 +1,332 @@
+//
+// Tweaks for jQuery UI
+// --------------------------------------------------
+
+
+//== Component containers
+//
+
+.ui-widget {
+  &,
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+    font-size: inherit;
+  }
+}
+
+
+//== Widgets
+//
+
+.ui-widget-content {
+  border: 1px solid $panel-border;
+  background: $body-bg;
+  color: $text-color;
+
+  a {
+    color: $text-color;
+  }
+}
+
+.ui-widget-header {
+  border: 0 none;
+  background: $header-bg;
+  color: $header-text;
+  font-weight: $font-weight-bold;
+
+  a {
+    color: $header-text;
+  }
+
+  a,
+  button {
+    &.ui-button {
+      border-color: $header-bg;
+      background: $header-bg;
+      box-shadow: none;
+      color: $header-text;
+
+      .ui-icon {
+        background-image: url("../../../stylesheets/jquery/images/ui-icons_ffffff_256x240.png");
+      }
+    }
+
+    &.ui-button:hover {
+      border-color: darken($header-bg, 12%);
+      background: darken($header-bg, 10%);
+    }
+  }
+}
+
+
+//== Interaction states
+//
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+  border: 1px solid $component-border;
+  background: $component-bg;
+  box-shadow: none;
+  color: $component-color;
+  font-weight: $font-weight-normal;
+}
+
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+  color: $component-color;
+  text-decoration: none;
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+  border: 1px solid $component-active-border;
+  background: $component-active-bg;
+  color: $component-active-color;
+  font-weight: $font-weight-normal;
+}
+
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited,
+.ui-state-focus a,
+.ui-state-focus a:hover,
+.ui-state-focus a:link,
+.ui-state-focus a:visited {
+  color: $component-active-color;
+  text-decoration: none;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+  border: 1px solid $component-active-border;
+  background: $component-active-bg;
+  color: $component-active-color;
+  font-weight: $font-weight-normal;
+
+  .ui-icon {
+    background-image: url("../../../stylesheets/jquery/images/ui-icons_ffffff_256x240.png");
+  }
+}
+
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+  color: $component-active-color;
+  text-decoration: none;
+}
+
+.ui-sortable-helper {
+  background-color: $body-bg;
+  @include nice-shadow(4);
+}
+
+
+//== Menu (e.g. autocomplete)
+//
+
+.ui-menu {
+  @include nice-shadow(2);
+  padding: 3px;
+  border-radius: $panel-border-radius;
+
+  .ui-menu-item {
+    &.ui-state-focus,
+    &.ui-state-active {
+      border-color: $pagination-hover-border;
+      background-color: $pagination-hover-bg;
+      color: $pagination-hover-color;
+
+      a {
+        color: $pagination-hover-color;
+      }
+
+      .ui-icon {
+        background-image: url("../../../stylesheets/jquery/images/ui-icons_222222_256x240.png");
+      }
+    }
+  }
+}
+
+.ui-menu-item {
+  border-radius: $panel-border-radius;
+}
+
+
+//== Dialogs
+//
+
+.modal {
+  z-index: 50;
+  background: $body-bg;
+
+  h3.title {
+    display: none;
+  }
+
+  p.buttons {
+    margin-bottom: 0;
+    text-align: right;
+  }
+}
+
+.ui-dialog {
+  &.ui-widget-content {
+    @include nice-shadow(5);
+    padding: 3px;
+    border: 0 none;
+
+    .ui-dialog-content {
+      padding: 1em;
+    }
+  }
+
+  .ui-dialog-titlebar-close {
+    right: .5em;
+  }
+
+  input[type="button"] {
+    @include button-variant($btn-link-color, $btn-link-bg, $btn-link-border);
+  }
+}
+
+.ui-widget-overlay {
+  background: #000;
+}
+
+
+//== Datepicker
+//
+
+img.ui-datepicker-trigger {
+  margin-left: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.ui-datepicker {
+  @include nice-shadow(3);
+  padding: .3em .6em .6em;
+  border: 0 none;
+
+  .ui-datepicker-header {
+    margin: 0 -.3em;
+    padding: .3em;
+  }
+
+  .ui-datepicker-prev {
+    left: .3em;
+  }
+
+  .ui-datepicker-next {
+    right: .3em;
+  }
+
+  .ui-datepicker-prev,
+  .ui-datepicker-next {
+    top: .3em;
+    border: 0 none;
+    background: transparent;
+  }
+
+  .ui-datepicker-title {
+    margin: 0 (1.8em + .3em);
+  }
+
+  select.ui-datepicker-month,
+  select.ui-datepicker-year {
+    width: 49%;
+    height: 1.8em;
+    margin: 0;
+  }
+
+  select.ui-datepicker-year {
+    margin-left: 1%;
+  }
+
+  .ui-datepicker-calendar {
+    margin: 0;
+    table-layout: fixed;
+
+    .ui-state-default {
+      border-color: $body-bg;
+      background: $body-bg;
+    }
+
+    .ui-state-focus,
+    .ui-state-hover {
+      border-color: $component-active-bg;
+      background: $component-active-bg;
+      color: $component-active-color;
+    }
+
+    .ui-state-active {
+      border-color: $highlight-border;
+      background: $highlight-bg;
+      color: $highlight-text;
+    }
+
+    .ui-datepicker-today {
+      .ui-state-highlight {
+        border-color: $component-active-border;
+      }
+    }
+
+    .ui-datepicker-current-day {
+      .ui-state-active {
+        border-color: $highlight-border;
+      }
+    }
+
+    td {
+      padding: 0 1px 1px 0;
+      text-align: right;
+
+      a {
+        padding-right: .4em;
+        padding-left: 0;
+        border-radius: $border-radius-base;
+      }
+
+      &.ui-datepicker-week-col {
+        padding-right: $table-condensed-cell-padding;
+        color: $gray-600;
+      }
+    }
+  }
+
+  .ui-datepicker-buttonpane {
+    @include clearfix;
+    margin: .6em 0 0;
+    padding: .6em 0 0;
+
+    button {
+      margin: 0;
+      padding: $btn-padding-vertical $btn-padding-horizontal;
+    }
+  }
+}
+
+.ui-tooltip {
+  @include nice-shadow(1);
+  padding: $padding-small-vertical $padding-small-horizontal;
+  border: 0 none;
+  background: $black;
+  color: $white;
+  font-size: $font-size-small-px;
+  pointer-events: none;
+
+  &.qtip {
+    pointer-events: initial;
+  }
+}

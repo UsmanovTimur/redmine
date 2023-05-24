@@ -1,0 +1,1156 @@
+@use "sass:math";
+
+//
+// Additionals
+// https://www.redmine.org/plugins/additionals
+// --------------------------------------------------
+
+#sidebar .dashboards .dashboard-system-default {
+  position: absolute;
+  transform: translateY(- ($sidebar-padding-vertical + math.div($line-height-computed, 2) + math.div($font-size-base, 2)));
+  @if $sidebar-position == "right" {
+    right: 15px;
+  }
+}
+
+.flyout-menu .dashboard-system-default {
+  position: absolute;
+  right: 10px;
+  transform: translateY(- ($padding-large-vertical + math.div($line-height-computed, 2) + math.div($font-size-base, 2)));
+}
+
+
+#sidebar .sidebar-additionals {
+  ul,
+  ol {
+    margin: 0 0 ($line-height-computed * .5);
+    padding-left: 1.5em;
+
+    ul,
+    ol {
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    // stylelint-disable selector-max-compound-selectors
+    li {
+      list-style-type: disc;
+
+      li {
+        list-style-type: circle;
+
+        li {
+          list-style-type: square;
+        }
+      }
+    }
+  }
+}
+
+.action-login .login-additionals {
+  font-size: 1em;
+
+  @media screen and (min-width: $login-form-box-breakpoint) {
+    max-width: $login-form-width;
+  }
+}
+
+#my-page.dashboard {
+  .mypage-box:not(.block-welcome, .block-projectinformation, .block-text, .block-text_async) {
+    margin-bottom: $line-height-computed;
+    padding: $panel-body-padding;
+    border: 1px solid $panel-border;
+    border-radius: $border-radius-base;
+    background-color: $panel-bg;
+    color: $panel-color;
+    font-size: .92em;
+    word-wrap: break-word;
+
+    > h3 {
+      margin-bottom: $panel-body-padding-vertical;
+    }
+  }
+}
+
+.controller-rdb_taskboard .gototop {
+  margin-right: $padding-side;
+}
+
+
+//
+// Additional tags
+// https://www.redmine.org/plugins/additional_tags
+// --------------------------------------------------
+
+.issue .tags.attribute {
+  padding-left: 160px;
+
+  .label {
+    width: 160px;
+    margin-left: -160px;
+  }
+
+  #tags-data {
+    padding-top: 3px;
+  }
+}
+
+#main {
+  .additional-tag-label-color {
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  #admin-menu a.additional-tags::before {
+    font-size: 1em;
+  }
+}
+
+#wiki_tags,
+#edit-tags-form {
+  .select2-container {
+    margin-bottom: 5px;
+
+    &.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+      margin: 0;
+      padding: 3px;
+    }
+  }
+}
+
+
+//
+// Redmine Dashboard
+// https://www.redmine.org/plugins/redmine-dashboard
+// --------------------------------------------------
+
+#rdb-taskboard {
+  #rdb-header {
+    a#rdb-refresh {
+      padding: 2px 0;
+      border-width: 0;
+      background-image: none;
+      line-height: 1.2em;
+
+      &::before {
+        content: $fa-var-refresh;
+        @include fa-icon;
+        width: 1em;
+        margin: 0 auto;
+        color: $green;
+        line-height: 1.2em;
+      }
+    }
+
+    .rdb-board .rdb-menu h2 {
+      font-size: 1em;
+    }
+
+    .rdb-board,
+    .rdb-filter,
+    .rdb-option {
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+  }
+
+  a#rdb-refresh,
+  a#rdb-refresh:focus,
+  a#rdb-refresh:hover,
+  .rdb-menu-link,
+  .rdb-menu-link:focus,
+  .rdb-menu-link:hover,
+  .rdb-menu .rdb-list a,
+  .rdb-menu .rdb-list a:focus,
+  .rdb-menu .rdb-list a:hover {
+    color: $gray-900;
+    text-decoration: none;
+  }
+
+  div:not(.rdb-card-header, .rdb-compact-header, .rdb-card-title) .rdb-menu {
+    .rdb-list {
+      > ul > li > a,
+      .rdb-multicheck a {
+        padding: 3px 5px;
+      }
+
+      .rdb-checkbox-link.rdb-checkbox-link-enabled {
+        background-image: none;
+
+        &::before {
+          content: $fa-var-check;
+          @include fa-icon;
+          color: $green;
+        }
+      }
+
+      .rdb-checkbox-link.rdb-checkbox-link-disabled {
+        padding: 0;
+        background-image: none;
+      }
+
+      a {
+        font-size: .9em;
+
+        &#rdb-reset {
+          background-image: none;
+
+          &::before {
+            content: $fa-var-times;
+            @include fa-icon;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+
+    &.rdb-menu-right .rdb-checkbox-link.rdb-checkbox-link-enabled::before {
+      margin-right: 8px;
+    }
+
+    .rdb-container h3 {
+      padding-top: 5px;
+      padding-bottom: 3px;
+    }
+  }
+
+  .rdb-headers .rdb-column h3 {
+    font-size: 1em;
+  }
+
+  .rdb-evt-group-toggle,
+  .rdb-evt-group-toggle:focus,
+  .rdb-evt-group-toggle:hover {
+    color: $text-color;
+  }
+
+  .rdb-card-header .rdb-menu-issue a.rdb-menu-link,
+  .rdb-compact-header .rdb-menu-issue a.rdb-menu-link,
+  .rdb-card-title > a {
+    background-image: none;
+
+    &::after {
+      content: $fa-var-cog;
+      @include fa-icon;
+      position: absolute;
+      top: 1px;
+      left: 2px;
+      color: $gray-600;
+    }
+  }
+
+  .rdb-property-tracker {
+    padding-left: 0;
+    background-image: none;
+
+    &::before {
+      content: $fa-var-ticket;
+      @include fa-icon;
+      margin-right: 4px;
+    }
+  }
+
+  .rdb-property-assignee {
+    padding-left: 0;
+    background-image: none;
+
+    &::before {
+      content: $fa-var-user;
+      @include fa-icon;
+      margin-right: 4px;
+    }
+  }
+}
+
+#rdb-footer #rdb-legend .rdb-overdue {
+  padding-right: 3px;
+}
+
+
+//
+// Redmine Impersonate
+// https://www.redmine.org/plugins/redmine_impersonate
+// --------------------------------------------------
+
+#impersonate::before {
+  content: $fa-var-user-secret;
+  @include fa-icon;
+  margin-right: 5px;
+}
+
+#impersonation-bar {
+  border-radius: 0;
+}
+
+
+//
+// Redmine Recaptcha
+// https://www.redmine.org/plugins/recaptcha
+// --------------------------------------------------
+
+.new-user .g-recaptcha {
+  padding-left: 170px;
+
+  @media screen and (max-width: $redmine-responsive-max) {
+    padding-left: 0;
+  }
+}
+
+
+//
+// Redmine Backlogs
+// https://github.com/HolonGlobe/redmine_backlogs
+// Forked from: https://github.com/backlogs/redmine_backlogs
+// --------------------------------------------------
+
+#backlogs_view_issues_sidebar {
+  > a {
+    display: block;
+    padding: $sidebar-padding-vertical $sidebar-padding-horizontal;
+    border: 1px solid transparent;
+
+    @if $sidebar-position == "left" {
+      margin-right: -($sidebar-padding-horizontal);
+      border-left-width: 3px;
+      border-radius: $border-radius-large 0 0 $border-radius-large;
+    } @else {
+      margin-left: -($sidebar-padding-horizontal);
+      border-right-width: 3px;
+      border-radius: 0 $border-radius-large $border-radius-large 0;
+    }
+
+    &:hover {
+      background-color: $sidebar-link-hover-bg;
+      text-decoration: none;
+    }
+
+    + br {
+      display: none;
+    }
+  }
+
+  .flyout-menu & {
+    a {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .burndown_chart {
+    max-width: $sidebar-width-computed;
+  }
+}
+
+
+//
+// Redmine Banner
+// https://github.com/akiko-pusu/redmine_banner
+// --------------------------------------------------
+
+#global_banner {
+  .box {
+    margin-bottom: $line-height-computed;
+  }
+}
+
+.banner_area {
+  @media screen and (max-width: $redmine-responsive-max) {
+    #main #content > & {
+      margin-bottom: $line-height-computed;
+    }
+  }
+
+  .banner {
+    @extend %fa-icon;
+    margin: 0;
+    padding: $padding-large-vertical $padding-large-horizontal;
+    padding-left: $padding-large-horizontal + 8px + 16px;
+    border: 1px solid $component-border;
+    border-radius: $border-radius-base;
+    background: $component-bg;
+    color: $component-color;
+
+    @media screen and (min-width: $redmine-responsive-min) {
+      border-radius: 0;
+    }
+
+    &::before {
+      content: $fa-var-info;
+      margin-left: -(8px + 16px);
+      float: left;
+      line-height: $line-height-computed;
+    }
+
+    &_info {
+      border-color: $flash-info-border;
+      background-color: $flash-info-bg;
+      color: $flash-info-text;
+
+      &::before {
+        content: $fa-var-info-circle;
+      }
+    }
+
+    &_warn {
+      border-color: $flash-warning-border;
+      background-color: $flash-warning-bg;
+      color: $flash-warning-text;
+
+      &::before {
+        content: $fa-var-warning;
+      }
+
+      a,
+      ~ div a {
+        color: $flash-warning-link;
+      }
+    }
+
+    &_alert {
+      border-color: $flash-error-border;
+      background-color: $flash-error-bg;
+      color: $flash-error-text;
+
+      &::before {
+        content: $fa-var-exclamation-circle;
+      }
+
+      a,
+      ~ div a {
+        color: $flash-error-link;
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol {
+      margin-bottom: $line-height-computed * .5;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .banner_edit {
+    a {
+      margin-left: 5px;
+    }
+  }
+}
+
+
+//
+// Redmine Hearts
+// https://github.com/cat-in-136/redmine_hearts
+// --------------------------------------------------
+
+.journal > div + .contextual {
+  padding-top: 0;
+  padding-bottom: 0;
+  border: 0;
+
+  > .heart-link-with-count {
+    display: block;
+    position: relative;
+    margin: -($line-height-computed * .5 + 1px) ($bubble-padding-horizontal - $padding-small-vertical) 0;
+    float: right;
+    border: 0;
+    background-color: $body-bg;
+    text-align: right;
+  }
+}
+
+.contextual {
+  .icon-heart,
+  .icon-heart-off {
+    margin-left: $padding-small-vertical;
+    background-image: none;
+  }
+
+  .heart-link-with-count {
+    margin-right: $padding-small-vertical;
+    margin-left: $padding-small-vertical;
+
+    > .heart-count-number {
+      display: inline-block;
+      min-width: 1em;
+      margin: 0 0 0 3px;
+      padding: 1px 4px;
+      border-radius: $border-radius-base;
+      background-color: $btn-default-bg;
+      color: $btn-default-color;
+      text-align: center;
+
+      &::before {
+        content: "";
+      }
+    }
+  }
+}
+
+#content > .contextual {
+  > span.heart-link-with-count {
+    padding: 0;
+    border: 0;
+    background: transparent;
+
+    > a:first-child {
+      margin-right: 0;
+      margin-left: 4px;
+      padding-right: floor($btn-padding-horizontal-small * .5);
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+
+      + a {
+        min-width: unset;
+        margin-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+}
+
+.controller-hearts .recent-heart-list li {
+  padding: $padding-large-vertical;
+}
+
+#wiki_form.new_content + .wiki_page--heart,
+#wiki_form.new_content + .heart-link-with-count {
+  display: none;
+}
+
+//
+// Redmine Time Tracker
+// https://github.com/fernandokosh/redmine_time_tracker
+// --------------------------------------------------
+
+.tt_list_button {
+  @extend %fa-icon;
+  font-size: $fa-font-size-base;
+}
+
+.icon,
+.tt_list_button {
+  &.icon-start,
+  &.icon-stop {
+    background-image: none;
+  }
+
+  &.icon-start {
+    @include link-variant(success);
+
+    &::before {
+      content: $fa-var-clock-o;
+    }
+  }
+
+  &.icon-stop {
+    @include link-variant(danger);
+
+    &::before {
+      content: $fa-var-history;
+    }
+  }
+}
+
+.time-tracker-quick-menu:empty {
+  display: none;
+}
+
+#user-time-bookings-list {
+  clear: both;
+}
+
+
+//
+// RedmineUP
+// https://www.redmineup.com/pages/plugins
+// --------------------------------------------------
+
+h2 {
+  .scope_title,
+  .live_search,
+  .tags {
+    vertical-align: top;
+  }
+
+  .live_search {
+    margin-left: $padding-side * .5;
+  }
+
+  .tags {
+    .tag_list {
+      margin-top: 0;
+    }
+  }
+}
+
+div.details {
+  &.contact,
+  &.product {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+}
+
+
+//
+// Redmine Agile
+// https://www.redmineup.com/pages/plugins/agile
+// --------------------------------------------------
+
+html.agile-board-fullscreen .icon.icon-fullscreen {
+  padding: ($padding-small-vertical - 1px) $padding-small-vertical;
+  font-size: 0;
+  text-align: center;
+  text-indent: 0;
+  @include nice-shadow(1);
+
+  &::before {
+    margin: 0;
+  }
+}
+
+@if $agile-board-customize {
+  .agile-board {
+    table.list.issues-board {
+      tbody tr {
+        background-color: $body-bg;
+
+        > td.issue-status-col {
+          padding: 0;
+          padding-left: parse-length($agile-issue-card-margin, left);
+          background-color: $agile-board-background;
+
+          &.closed .issue-card {
+            background: $agile-issue-card-closed-background;
+          }
+        }
+      }
+    }
+
+    .issue-card {
+      margin: $agile-issue-card-margin;
+      margin-left: 0;
+      padding: $agile-issue-card-padding;
+      border: 1px solid $agile-issue-card-border;
+      border-width: $agile-issue-card-border-width;
+      border-radius: $agile-issue-card-border-radius;
+      background-color: $agile-issue-card-background;
+      color: $agile-issue-card-color;
+      @include nice-shadow(1);
+
+      &.ui-sortable-helper {
+        @include nice-shadow(4);
+      }
+
+      &:not(.context-menu-selection) {
+        .attributes,
+        em.info,
+        span.hours {
+          color: $text-color;
+        }
+      }
+
+      @each $class, $color in $agile-issue-card-color-map {
+        &.#{$class} {
+          border-color: map-get($color, border);
+          background-color: map-get($color, background);
+        }
+      }
+
+      .checklist,
+      .info,
+      .sub-issues {
+        border-color: rgba($black, .15);
+      }
+
+      p.issue-id,
+      p.name {
+        margin-bottom: 5px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+
+      p.issue-id {
+        line-height: 1;
+      }
+
+      p.project {
+        border-radius: $agile-issue-card-border-radius - 1px;
+        border-color: rgba($black, .15);
+        background-clip: padding-box;
+      }
+
+      p.name {
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  @each $class, $color in $agile-issue-card-color-map {
+    @if map-get($color, link) != $link-color {
+      .#{$class} {
+        a {
+          color: map-get($color, link);
+        }
+      }
+    }
+  }
+}
+
+.agile-board {
+  .quick-comment {
+    textarea {
+      margin-bottom: parse-length($agile-issue-card-padding, bottom);
+    }
+  }
+}
+
+
+.controller-agile_charts #main {
+  @if $css-grid-layout {
+    > div:not(#content):not(#sidebar) {
+      grid-area: footer;
+    }
+  } @else if $flexbox-layout {
+    flex-wrap: wrap;
+
+    > #footer {
+      flex: 1 0 auto;
+      order: 3;
+    }
+  }
+
+  // Page layout on Agile charts is broken, and with "Go to top" link
+  // from https://github.com/alphanodes/additionals plugin enabled
+  // the chart expands and resize event is triggered indefinitely.
+  // Hiding the "Go to top" link fixes this issue.
+  .gototop {
+    display: none;
+  }
+}
+
+
+//
+// Redmine CRM
+// https://www.redmineup.com/pages/plugins/crm
+// --------------------------------------------------
+
+table.sidebar.attributes {
+  tr {
+    th,
+    td {
+      padding: parse-length($table-condensed-cell-padding, top) 0;
+      vertical-align: top;
+    }
+
+    th {
+      padding-right: parse-length($table-condensed-cell-padding, right);
+    }
+  }
+}
+
+div.add-note {
+  input,
+  textarea {
+    margin-bottom: $line-height-computed;
+  }
+}
+
+@if $table-list-highlight-rows {
+  table.contacts.index,
+  table.contacts.index {
+    > tbody > tr:nth-child(n):hover {
+      background-color: $table-bg-hover;
+    }
+  }
+}
+
+
+//
+// Redmine Tags
+// https://www.redmineup.com/pages/plugins/tags
+// --------------------------------------------------
+
+.select2 {
+  .filter .values & {
+    min-width: 180px;
+    margin: 0;
+  }
+
+  &-container.select2-container--default {
+    color: $text-color;
+
+    .select2-selection--single,
+    .select2-selection--multiple {
+      min-height: $input-height-base;
+      line-height: $line-height-base;
+    }
+
+    .select2-selection--single {
+      height: $input-height-base;
+
+      .select2-selection__rendered {
+        padding-top: $input-padding-vertical;
+        padding-bottom: $input-padding-vertical;
+        border: 0;
+        font-size: $font-size-base;
+        line-height: $line-height-base;
+      }
+
+      .select2-selection__arrow {
+        height: $input-height-base;
+      }
+
+      .select2-selection__clear {
+        border: 0;
+      }
+    }
+
+    .select2-selection--multiple {
+      .select2-selection__rendered {
+        padding: 0 3px 3px;
+      }
+
+      .select2-selection__choice {
+        margin-top: 3px;
+        margin-right: 3px;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .select2-search--inline {
+        input {
+          height: auto;
+          padding-top: 0;
+          padding-bottom: 0;
+          line-height: inherit;
+        }
+      }
+    }
+
+    .select2-selection {
+      transition:
+        border-color $transition-time ease-in-out,
+        box-shadow $transition-time ease-in-out;
+      border-color: $input-border;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075);
+      background-clip: padding-box;
+
+      &.icon {
+        padding-left: 18px + 8px;
+
+        &::before {
+          position: absolute;
+          top: 50%;
+          left: 8px;
+          margin: ($fa-font-size-base * -.5) 0 0;
+        }
+      }
+    }
+
+    &.select2-container {
+      &:focus,
+      * {
+        outline: none;
+      }
+
+      &--open,
+      &--focus {
+        .select2-selection {
+          border-color: rgba($input-border-focus, $input-border-focus-alpha);
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075), 0 0 0 2px rgba($input-border-focus, $input-shadow-focus-alpha);
+        }
+      }
+    }
+
+    .select2-search__field {
+      &:focus {
+        border-color: rgba($input-border-focus, $input-border-focus-alpha);
+      }
+    }
+  }
+}
+
+span.tag-label-color {
+  @at-root body & {
+    padding: 0 !important; // stylelint-disable-line declaration-no-important
+    border: 0 !important; // stylelint-disable-line declaration-no-important
+    border-radius: $badge-border-radius;
+    box-shadow: inset 0 -1px 0 rgba($black, .12);
+    font-size: $font-size-small-px;
+
+    a,
+    span {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    > a,
+    > span {
+      display: inline-block;
+      padding: 1px 5px;
+      text-shadow: 0 1px 0 rgba($black, .2);
+    }
+
+    a {
+      &:hover {
+        opacity: .8;
+      }
+    }
+  }
+}
+
+.list td.tags {
+  padding-bottom: max(parse-length($table-cell-padding, bottom) - 2px - 1px, 0);
+
+  span.tag-label-color {
+    margin-bottom: 2px;
+    margin-left: 0;
+    transform: translateY(-1px);
+  }
+}
+
+
+//
+// Redmine Checklists
+// https://www.redmineup.com/pages/plugins/checklists
+// --------------------------------------------------
+
+.checklist {
+  li {
+    a {
+      margin: 0;
+      line-height: inherit;
+    }
+  }
+}
+
+#checklist_form_items {
+  .checklist-item {
+    display: block;
+    margin: 0 0 2px;
+
+    &.new {
+      margin: $padding-base-vertical 0 0;
+    }
+
+    input[type="checkbox"] {
+      position: relative;
+      top: 2px;
+      vertical-align: baseline;
+    }
+
+    input[type="button"] {
+      margin-right: 4px;
+    }
+  }
+}
+
+#checklist-menu.ui-menu {
+  a {
+    padding: 2px 0 2px 24px;
+  }
+}
+
+
+//
+// Redmine custom menu
+// http://rmplus.pro/en/redmine/plugins/custom_menu
+// --------------------------------------------------
+
+#top-menu {
+  .cm-menu-header {
+    > li {
+      margin: 0;
+
+      > a,
+      > .title {
+        line-height: $input-height-base;
+      }
+
+      > .cm-menu-divider {
+        height: 18px;
+        margin: 5px 4px 0 5px;
+        border-top: 0;
+        border-left: 1px solid;
+        opacity: .3;
+      }
+    }
+
+    .drdn-trigger {
+      font-size: $font-size-base;
+    }
+  }
+
+  .dropdown {
+    .dropdown-menu > li a:hover,
+    .dropdown-menu > li a:focus,
+    .dropdown-submenu:hover a,
+    .dropdown-submenu:focus a {
+      background-color: $brand-primary;
+      color: $brand-text;
+    }
+  }
+
+  .rm-icon {
+    &::before {
+      font-size: $fa-font-size-base;
+    }
+  }
+
+  #quick-search {
+    margin: 0;
+
+    form > input {
+      width: $quick-search-width * .5;
+      min-width: $quick-search-width * .5;
+    }
+
+    a {
+      line-height: inherit;
+    }
+  }
+}
+
+
+//
+// Redmine codebutton
+// https://github.com/mediatainment/redmine_codebutton
+// --------------------------------------------------
+
+#toolbar-code-options {
+  select {
+    width: 100%;
+  }
+
+  .buttons {
+    white-space: nowrap;
+  }
+}
+
+
+//
+// Redmine Stuff To Do
+// https://github.com/raafael911/stuff_to_do_plugin
+// --------------------------------------------------
+
+#stuff-to-do {
+  p {
+    @if $sidebar-position == "left" {
+      margin-right: -($sidebar-padding-horizontal);
+    } @else {
+      margin-left: -($sidebar-padding-horizontal);
+    }
+
+    > a {
+      display: block;
+      padding: $sidebar-padding-vertical $sidebar-padding-horizontal;
+
+      @if $sidebar-position == "left" {
+        border-radius: $border-radius-large 0 0 $border-radius-large;
+      } @else {
+        border-radius: 0 $border-radius-large $border-radius-large 0;
+      }
+
+      &:hover {
+        background-color: $sidebar-link-hover-bg;
+        text-decoration: none;
+      }
+    }
+
+    > br {
+      display: none;
+    }
+  }
+}
+
+// Note: the following applies to the latest version
+// of Stuff To Do plugin from the master branch.
+
+.controller-stuff_to_do {
+  .menu {
+    label,
+    select {
+      margin-bottom: 5px;
+    }
+  }
+
+  .stuff-to-do-item {
+    padding: $table-cell-padding;
+    border: 1px solid $table-border-color;
+    border-width: $table-list-item-border;
+    background-color: $body-bg;
+  }
+
+  .pane {
+    ol {
+      padding: 0;
+    }
+
+    .issue-details {
+      width: 80%;
+      margin: 0;
+
+      a {
+        img {
+          display: none;
+        }
+      }
+    }
+
+    .progress {
+      width: 20%;
+      margin: 0;
+    }
+
+    .estimate {
+      top: $table-cell-padding - 1px;
+      right: $table-cell-padding;
+      left: auto;
+      width: 20%;
+      font-size: $font-size-small;
+      text-align: right;
+    }
+  }
+}
+
+
+//
+// Redmine WikiNG
+// https://github.com/martin-denizet/wiking
+// --------------------------------------------------
+
+div.wiking {
+  &.flash {
+    &.warning,
+    &.notice,
+    &.tip {
+      background-image: none;
+    }
+
+    &.tip {
+      &::before {
+        content: $fa-var-lightbulb-o;
+      }
+    }
+  }
+}

@@ -1,0 +1,1086 @@
+%fa-icon {
+  &::before {
+    @include fa-icon;
+    margin-right: $padding-small-vertical;
+  }
+}
+
+%fa-icon-after {
+  &::after {
+    display: inline-block;
+    margin-left: $padding-small-vertical;
+    font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+    font-size: inherit; // can't have font-size inherit on line above, so need to override
+    text-rendering: auto; // optimizelegibility throws things off #1094
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+$icon-map: (
+  icon-add:                     $fa-var-plus-square,
+  icon-edit:                    $fa-var-pencil,
+  icon-copy:                    $fa-var-copy,
+  icon-duplicate:               $fa-var-clipboard,
+  icon-del:                     $fa-var-trash,
+  icon-move:                    $fa-var-arrows,
+  icon-save:                    $fa-var-save,
+  icon-download:                $fa-var-download,
+  icon-cancel:                  $fa-var-ban,
+  icon-multiple:                $fa-var-plus-circle,
+  icon-folder:                  $fa-var-folder,
+  icon-package:                 $fa-var-cube,
+  icon-user:                    $fa-var-user,
+  icon-project:                 $fa-var-cube,
+  icon-projects:                $fa-var-cubes,
+  icon-help:                    $fa-var-info-circle,
+  icon-attachment:              $fa-var-paperclip,
+  icon-history:                 $fa-var-history,
+  icon-time-entry:              $fa-var-clock-o,
+  icon-time:                    $fa-var-clock-o,
+  icon-time-add:                $fa-var-clock-o,
+  icon-stats:                   $fa-var-line-chart,
+  icon-warning:                 $fa-var-warning,
+  icon-error:                   $fa-var-exclamation,
+  icon-fav:                     $fa-var-star,
+  icon-fav-off:                 $fa-var-star-o,
+  icon-heart:                   $fa-var-heart,
+  icon-heart-off:               $fa-var-heart-o,
+  icon-reload:                  $fa-var-refresh,
+  icon-locked:                  $fa-var-lock,
+  icon-lock:                    $fa-var-lock,
+  icon-unlock:                  $fa-var-unlock,
+  icon-checked:                 $fa-var-check,
+  icon-details:                 $fa-var-search-plus,
+  icon-report:                  $fa-var-pie-chart,
+  icon-comments:                $fa-var-comment,
+  icon-comment:                 $fa-var-comment,
+  icon-summary:                 $fa-var-file-text,
+  icon-server-authentication:   $fa-var-key,
+  icon-issue:                   $fa-var-ticket,
+  icon-zoom-in:                 $fa-var-search-plus,
+  icon-zoom-out:                $fa-var-search-minus,
+  icon-magnifier:               $fa-var-search,
+  icon-passwd:                  $fa-var-key,
+  icon-arrow-right:             $fa-var-arrow-right,
+  icon-test:                    $fa-var-arrow-circle-right,
+  icon-sticky:                  $fa-var-thumb-tack,
+  icon-email:                   $fa-var-envelope,
+  icon-email-disabled:          $fa-var-envelope-o,
+  icon-email-add:               $fa-var-envelope,
+  icon-ok:                      $fa-var-check,
+  icon-not-ok:                  $fa-var-times,
+  icon-link-break:              $fa-var-chain-broken,
+  icon-list:                    $fa-var-list-ul,
+  icon-close:                   $fa-var-times-circle,
+  icon-settings:                $fa-var-cog,
+  icon-group:                   $fa-var-users,
+  icon-groupnonmember:          $fa-var-users,
+  icon-groupanonymous:          $fa-var-users,
+  icon-roles:                   $fa-var-eye,
+  icon-issue-edit:              $fa-var-edit,
+  icon-workflows:               $fa-var-sitemap,
+  icon-custom-fields:           $fa-var-edit,
+  icon-plugins:                 $fa-var-puzzle-piece,
+  icon-news:                    $fa-var-newspaper-o,
+  icon-issue-closed:            $fa-var-ticket,
+  icon-issue-note:              $fa-var-comment,
+  icon-changeset:               $fa-var-upload,
+  icon-message:                 $fa-var-comment,
+  icon-reply:                   $fa-var-comment-o,
+  icon-wiki-page:               $fa-var-file-text-o,
+  icon-document:                $fa-var-file-text,
+  icon-add-bullet:              $fa-var-plus-circle,
+  icon-shared:                  $fa-var-link,
+  icon-actions:                 $fa-var-ellipsis-h,
+  icon-sort-handle:             $fa-var-arrows-v,
+  icon-expended:                $fa-var-chevron-down,
+  icon-collapsed:               $fa-var-chevron-right,
+  icon-bookmark:                $fa-var-bookmark,
+  icon-bookmark-off:            $fa-var-bookmark-o,
+  icon-sorted-asc:              $fa-var-sort-amount-asc,
+  icon-sorted-desc:             $fa-var-sort-amount-desc,
+  icon-toggle-plus:             $fa-var-plus-square,
+  icon-toggle-minus:            $fa-var-minus-square,
+  icon-clear-query:             $fa-var-times,
+  icon-import:                  $fa-var-cloud-upload,
+  icon-bookmarked-project:      $fa-var-tag,
+  icon-copy-link:               $fa-var-clipboard,
+
+  // Plugin icons
+  icon-call:                    $fa-var-phone,
+  icon-contact:                 $fa-var-vcard,
+  icon-erase:                   $fa-var-eraser,
+  icon-facebook:                $fa-var-facebook-square,
+  icon-fullscreen:              $fa-var-arrows-alt,
+  icon-linkedin:                $fa-var-linkedin-square,
+  icon-meeting:                 $fa-var-calendar-check-o,
+  icon-merge:                   $fa-var-code-fork,
+  icon-money-dollar:            $fa-var-usd,
+  icon-money-euro:              $fa-var-eur,
+  icon-money-pound:             $fa-var-gbp,
+  icon-money-yen:               $fa-var-jpy,
+  icon-move-bottom:             $fa-var-angle-double-down,
+  icon-move-down:               $fa-var-angle-down,
+  icon-move-top:                $fa-var-angle-double-up,
+  icon-move-up:                 $fa-var-angle-up,
+  icon-phone:                   $fa-var-phone,
+  icon-skype:                   $fa-var-skype,
+  icon-tags:                    $fa-var-tags,
+  icon-twitter:                 $fa-var-twitter-square,
+  icon-vcard:                   $fa-var-vcard,
+  banner-icon-edit:             $fa-var-edit,
+  banner-icon-off:              $fa-var-times,
+);
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+table.list .buttons > a::before {
+  font-size: $fa-font-size-base;
+}
+
+
+//== Buttons icons
+//
+
+.icon,
+.icon-only:not(.toggle-multiselect) {
+  @extend %fa-icon;
+  padding-left: $icon-width;
+  background-repeat: no-repeat;
+  background-position: 0% 50%;
+
+  &::before {
+    margin-left: -$icon-width;
+  }
+}
+
+.icon-only {
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+  vertical-align: top;
+  white-space: nowrap;
+
+  &::before {
+    width: $icon-width;
+    text-align: center;
+  }
+}
+
+// A empty icon should behave more like icon-only
+a.icon:empty {
+  display: inline-block;
+}
+
+span.icon + span.icon {
+  margin-left: $padding-small-vertical;
+}
+
+$icons-selector: ();
+@each $class, $icon in $icon-map {
+  $icons-selector: append($icons-selector, unquote(".#{$class}"), "comma");
+
+  .#{$class} {
+    &::before {
+      content: $icon;
+
+      @if $class == "icon-fav" {
+        color: $orange;
+      } @else if $class == "icon-heart" {
+        color: $pink;
+      } @else if $class == "icon-bookmarked-project" {
+        color: $blue;
+      }
+    }
+
+    @if $class == "icon-close" {
+      &:hover::before {
+        content: $fa-var-times-circle-o;
+      }
+    } @else if $class == "icon-folder" {
+      .open &::before {
+        content: $fa-var-folder-open;
+      }
+    }
+  }
+}
+
+#{$icons-selector} {
+  &.icon {
+    background-image: none;
+  }
+}
+
+//== Checkbox toggler
+//
+
+a.toggle-checkboxes {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-check-square-o;
+  }
+}
+
+
+//== Colorize some actions
+//
+
+a.icon,
+a.icon-only {
+  @include link-variant(default);
+}
+
+.icon-checked {
+  @include link-variant(success, false);
+}
+
+a.icon-add,
+a.icon-save,
+a.icon-checked {
+  @include link-variant(success);
+}
+
+a.icon-del {
+  @include link-variant(danger);
+}
+
+
+//== File types
+//
+
+.icon-folder,
+.icon-file {
+  &::before {
+    width: $icon-width;
+    text-align: center;
+  }
+}
+
+.icon-file {
+  &::before {
+    content: $fa-var-file-o;
+    color: $gray-700;
+  }
+
+  &.text-plain::before         { content: $fa-var-file-text-o; }
+  &.text-x-c::before           { content: $fa-var-file-code-o; }
+  &.text-x-csharp::before      { content: $fa-var-file-code-o; }
+  &.text-x-java::before        { content: $fa-var-file-code-o; }
+  &.text-x-php::before         { content: $fa-var-file-code-o; }
+  &.text-x-ruby::before        { content: $fa-var-file-code-o; }
+  &.text-xml::before           { content: $fa-var-file-code-o; }
+  &.text-css::before           { content: $fa-var-file-code-o; }
+  &.text-html::before          { content: $fa-var-file-code-o; }
+  &.text-x-sh::before          { content: $fa-var-file-text-o; }
+
+  &.application-javascript::before,
+  &.text-x-javascript::before { content: $fa-var-file-code-o; }
+
+  &.application-pdf::before    { content: $fa-var-file-pdf-o; }
+  &.application-msword::before { content: $fa-var-file-word-o; }
+
+  &.application-vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet::before,
+  &.application-vnd\.ms-excel::before { content: $fa-var-file-excel-o; }
+
+  &.image-vnd\.microsoft\.icon::before,
+  &.image-gif::before,
+  &.image-jpeg::before,
+  &.image-png::before,
+  &.image-tiff::before {
+    content: $fa-var-file-image-o;
+  }
+
+  &.application-zip::before,
+  &.application-x-gzip::before {
+    content: $fa-var-file-zip-o;
+  }
+}
+
+.icon-expended,
+.icon-collapsed {
+  &::before {
+    text-align: center;
+  }
+
+  &.icon {
+    padding-left: $icon-width;
+  }
+
+  &.expander {
+    background-image: none;
+  }
+}
+
+.icon-zoom-in + .icon-zoom-out {
+  margin-left: $padding-small-vertical;
+}
+
+
+//== Administration menu sections
+//
+
+%admin-icon {
+  @extend %fa-icon;
+
+  &:hover::before {
+    color: $gray-900;
+  }
+
+  &.selected::before {
+    color: $gray-950;
+  }
+}
+
+#admin-menu {
+  #admin-index > & {
+    a {
+      padding-left: 5px + $icon-width;
+    }
+  }
+
+  li {
+    > a {
+      padding-left: $sidebar-padding-horizontal + 5px + $icon-width;
+
+      &::before {
+        display: inline-block;
+        width: $icon-width;
+        margin: 0;
+        margin-left: -(5px + $icon-width);
+        padding: 0;
+        color: $gray-700;
+        text-align: center;
+      }
+    }
+  }
+
+  .projects {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-cubes; }
+  }
+
+  .users {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-user; }
+  }
+
+  .groups {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-group; }
+  }
+
+  .roles {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-eye; }
+  }
+
+  .trackers {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-ticket; }
+  }
+
+  .issue-statuses,
+  .issue_statuses {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-pencil-square; }
+  }
+
+  .workflows {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-sitemap; }
+  }
+
+  .custom-fields,
+  .custom_fields {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-edit; }
+  }
+
+  .enumerations {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-list; }
+  }
+
+  .settings {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-gear; }
+  }
+
+  .plugins {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-puzzle-piece; }
+  }
+
+  .info {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-info-circle; }
+  }
+
+  .ldap-authentication,
+  .server_authentication {
+    @extend %admin-icon;
+
+    &::before { content: $fa-var-key; }
+  }
+}
+
+
+//== Drag-and-drop sorting
+//
+
+.sort-handle {
+  @extend %fa-icon;
+  text-align: center;
+  cursor: move;
+
+  &::before {
+    content: $fa-var-arrows-v;
+  }
+
+  &.ajax-loading {
+    &::before {
+      content: $fa-var-refresh;
+      animation: spin 1s linear infinite;
+      color: $gray-700;
+    }
+  }
+}
+
+
+//== Headers with icons
+//
+
+h3.icon,
+h3.version,
+h3.comments,
+div.issues h3,
+div.members h3,
+div.news h3,
+div.projects h3 {
+  @extend %fa-icon;
+  color: $gray-900;
+
+  &::before {
+    width: $icon-width;
+    margin-right: $padding-small-vertical;
+    transform: translateY(-.1em);
+    color: $gray-700;
+    text-align: center;
+  }
+}
+
+h3.version::before      { content: $fa-var-cube; }
+h3.comments::before     { content: $fa-var-comments; }
+div.issues h3::before   { content: $fa-var-ticket; }
+div.members h3::before  { content: $fa-var-users; }
+div.news h3::before     { content: $fa-var-newspaper-o; }
+div.projects h3::before { content: $fa-var-cubes; }
+
+
+//== Activity types icons
+//
+
+dt {
+  &.issue,
+  &.issue-edit,
+  &.issue.closed,
+  &.issue-closed,
+  &.issue-note,
+  &.changeset,
+  &.news,
+  &.message,
+  &.reply,
+  &.wiki-page,
+  &.attachment,
+  &.document,
+  &.project,
+  &.time-entry {
+    @extend %fa-icon;
+
+    &::before {
+      margin-left: -$padding-side;
+      float: left;
+      line-height: $line-height-computed;
+    }
+  }
+
+  &.issue::before        { content: $fa-var-ticket; }
+  &.issue-edit::before   { content: $fa-var-edit; }
+  &.issue.closed::before { content: $fa-var-ticket; }
+  &.issue-closed::before { content: $fa-var-ticket; }
+  &.issue-note::before   { content: $fa-var-comment; }
+  &.changeset::before    { content: $fa-var-upload; }
+  &.news::before         { content: $fa-var-newspaper-o; }
+  &.message::before      { content: $fa-var-comment; }
+  &.reply::before        { content: $fa-var-comment-o; }
+  &.wiki-page::before    { content: $fa-var-file-text-o; }
+  &.attachment::before   { content: $fa-var-paperclip; }
+  &.document::before     { content: $fa-var-file-text; }
+  &.project::before      { content: $fa-var-cube; }
+  &.time-entry::before   { content: $fa-var-clock-o; }
+}
+
+
+//== Alternative icons
+//
+
+.search_for_watchers > a {
+  @extend %fa-icon;
+  @include icon-variant(success);
+
+  &::before {
+    content: $fa-var-plus;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+.atom {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-rss-square;
+  }
+}
+
+.issues .buttons a,
+#related-issues li > a {
+  &[data-method="delete"] {
+    @extend %fa-icon;
+
+    &::before {
+      content: $fa-var-chain-broken;
+    }
+
+    img {
+      display: none;
+    }
+  }
+}
+
+#main a.close-icon {
+  @extend %fa-icon;
+  @include link-variant(danger);
+  width: auto;
+  height: auto;
+  background: transparent;
+
+  &::before {
+    content: $fa-var-remove;
+  }
+}
+
+a.project {
+  $svg-star: inline-svg("icon-star.svg", (path: (fill: $orange)));
+  $svg-tag: inline-svg("icon-tag.svg", (path: (fill: $blue)));
+
+  &.icon {
+    padding-left: 0;
+
+    &::before {
+      content: "";
+      display: none;
+      margin: 0;
+    }
+  }
+
+  &.my-project,
+  &.icon-user,
+  &.icon-bookmarked-project {
+    padding-right: $icon-width;
+    background-image: $svg-star;
+    background-repeat: no-repeat;
+    background-position: bottom .2em right 0, bottom .2em right $icon-width;
+  }
+
+  &.icon-bookmarked-project {
+    background-image: $svg-tag;
+  }
+
+  &.icon-user.icon-bookmarked-project {
+    padding-right: $icon-width * 2;
+    background-image: $svg-tag, $svg-star;
+  }
+}
+
+span.my-project {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-star;
+    width: $icon-width;
+    margin-right: 0;
+    color: $orange;
+    text-align: center;
+  }
+}
+
+.sort {
+  @extend %fa-icon-after;
+  padding-left: 0;
+
+  &::before {
+    content: none;
+  }
+
+  &::after {
+    margin-left: .2em;
+  }
+
+  &.asc,
+  &.desc {
+    background-image: none;
+  }
+
+  &.asc::after {
+    content: $fa-var-sort-amount-asc;
+  }
+
+  &.desc::after {
+    content: $fa-var-sort-amount-desc;
+  }
+
+  .sort-by-id &,
+  .sort-by-done-ratio &,
+  .sort-by-estimated-hours &,
+  .sort-by-spent-hours & {
+    &.asc::after  { content: $fa-var-sort-numeric-asc; }
+    &.desc::after { content: $fa-var-sort-numeric-desc; }
+  }
+
+  .sort-by-assigned-to &,
+  .sort-by-subject & {
+    &.asc::after  { content: $fa-var-sort-alpha-asc; }
+    &.desc::after { content: $fa-var-sort-alpha-desc; }
+  }
+}
+
+a.remove-upload {
+  @extend %fa-icon;
+  @include link-variant(danger);
+  opacity: $icon-opacity;
+  text-align: center;
+
+  &:hover,
+  &:focus {
+    opacity: $icon-hover-opacity;
+    text-decoration: none;
+  }
+
+  &::before {
+    content: $fa-var-trash;
+  }
+}
+
+em.info.error {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-exclamation-circle;
+  }
+}
+
+.message {
+  .contextual {
+    a {
+      @extend %fa-icon;
+      opacity: .7;
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+
+      img {
+        display: none;
+      }
+    }
+  }
+
+  > .contextual {
+    a {
+      &:nth-child(1) {
+        &::before {
+          content: $fa-var-comment;
+        }
+      }
+
+      &:nth-child(2) {
+        &::before {
+          content: $fa-var-pencil;
+        }
+      }
+
+      &:nth-child(3) {
+        &::before {
+          content: $fa-var-trash;
+        }
+      }
+    }
+  }
+}
+
+tr.message {
+  &.locked td.subject,
+  &.sticky td.subject {
+    @extend %fa-icon;
+  }
+
+  &.locked {
+    color: $gray-700;
+
+    td.subject {
+      &::before {
+        content: $fa-var-lock;
+      }
+    }
+  }
+
+  &.sticky td.subject {
+    font-weight: $font-weight-bold;
+
+    &::before {
+      content: $fa-var-bookmark;
+    }
+  }
+}
+
+tr.version.shared td.name {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-link;
+  }
+}
+
+table.boards {
+  a.board {
+    @extend %fa-icon;
+
+    &::before {
+      content: $fa-var-comments;
+    }
+  }
+}
+
+table.members {
+  td.group,
+  td.groupnonmember,
+  td.groupanonymous {
+    @extend %fa-icon;
+
+    &::before {
+      content: $fa-var-group;
+    }
+  }
+}
+
+div.wiki {
+  .external {
+    @extend %fa-icon;
+
+    &::before {
+      content: $fa-var-external-link;
+      display: inline;
+      margin-right: 3px;
+      font-size: 10px;
+    }
+  }
+}
+
+.contextual [href*="edit"] {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-pencil;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+#attach_files_link {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-plus;
+    margin-right: .3em;
+  }
+}
+
+.other-formats {
+  %other-format {
+    @extend %fa-icon;
+    background-image: none;
+
+    &::before {
+      margin-right: .3em;
+    }
+  }
+
+  .pdf {
+    @extend %other-format;
+
+    &::before {
+      content: $fa-var-file-pdf-o;
+    }
+  }
+
+  .html {
+    @extend %other-format;
+
+    &::before {
+      content: $fa-var-file-code-o;
+    }
+  }
+
+  .txt {
+    @extend %other-format;
+
+    &::before {
+      content: $fa-var-file-text-o;
+    }
+  }
+
+  .csv {
+    @extend %other-format;
+
+    &::before {
+      content: $fa-var-file-excel-o;
+    }
+  }
+
+  .png {
+    @extend %other-format;
+
+    &::before {
+      content: $fa-var-file-image-o;
+    }
+  }
+}
+
+
+//== Hacks and overrides for Font Awesome
+//
+
+// Attachments and watchers delete icon
+
+.attachments,
+.watchers {
+  a.delete {
+    @extend %fa-icon;
+    @include icon-variant(danger);
+
+    &::before {
+      content: $fa-var-trash;
+    }
+
+    img {
+      display: none;
+    }
+  }
+}
+
+
+// Issue edit form icon
+
+#all_attributes label[for="issue_description"] + a {
+  @extend %fa-icon;
+
+  &::before {
+    content: $fa-var-pencil;
+  }
+
+  .icon {
+    padding-left: 0;
+
+    &::before {
+      content: "";
+      margin: 0;
+    }
+  }
+
+  img {
+    display: none;
+  }
+}
+
+
+// Issue journal contextual icons
+
+.journal .wiki .contextual {
+  > a {
+    @extend %fa-icon;
+
+    &::before {
+      width: $icon-width;
+      margin-right: 0;
+      text-align: center;
+    }
+
+    &:not([class*="icon"]) {
+      &::before {
+        content: $fa-var-comment;
+      }
+
+      &:nth-child(2) {
+        &::before {
+          content: $fa-var-pencil;
+        }
+      }
+
+      &:nth-child(3) {
+        &::before {
+          content: $fa-var-trash;
+        }
+      }
+    }
+
+    img {
+      display: none;
+    }
+  }
+}
+
+
+// Category and target vesion add icon
+
+#issue_category_id + a,
+#issue_fixed_version_id + a {
+  @extend %fa-icon;
+  @include icon-variant(success);
+
+  &::before {
+    content: $fa-var-plus-square;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+
+// jQuery UI datepicker trigger button
+
+img.ui-datepicker-trigger {
+  position: relative;
+  top: -1px;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  padding-left: 14px;
+  background-image: inline-svg("calendar.svg", (path: (fill: $btn-default-icon-color)));
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
+// Lists toggle checkbox icon
+
+table.list th.checkbox > a {
+  @extend %fa-icon;
+  @include icon-variant(success);
+
+  &::before {
+    content: $fa-var-check;
+    margin-right: 0;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+
+// Time entries list icons
+
+.time-entry .buttons > a {
+  @extend %fa-icon;
+
+  &[href*="edit"]::before {
+    content: $fa-var-pencil;
+  }
+
+  &[data-method="delete"]::before {
+    content: $fa-var-trash;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+
+// Files list
+
+.file .buttons > a {
+  @extend %fa-icon;
+
+  &[data-method="delete"] {
+    @include icon-variant(danger);
+
+    &::before {
+      content: $fa-var-trash;
+    }
+  }
+
+  img {
+    display: none;
+  }
+}
+
+
+// Commit keywords
+
+.delete-commit-keywords {
+  @extend %fa-icon;
+  @include icon-variant(danger);
+  font-size: $font-size-base;
+
+  &::before {
+    content: $fa-var-trash;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+.add-commit-keywords {
+  @extend %fa-icon;
+  @include icon-variant(success);
+  font-size: $font-size-base;
+
+  &::before {
+    content: $fa-var-plus-square;
+  }
+
+  img {
+    display: none;
+  }
+}

@@ -1,0 +1,34 @@
+@import "../common";
+
+.qtip {
+  position: absolute;
+  top: -31000px;
+  left: -31000px;
+  width: auto;
+  max-width: 500px;
+  outline: none;
+}
+
+.ui-tooltip-content {
+  @include nice-shadow(2);
+  position: relative;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid $tooltip-border;
+  background-color: $tooltip-bg;
+  color: $tooltip-text;
+  font-size: $font-size-list;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.ui-tooltip-tip {
+  position: absolute;
+  z-index: 10;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 0 none;
+  border-color: $tooltip-border;
+  background: transparent;
+  background-color: $tooltip-bg;
+}

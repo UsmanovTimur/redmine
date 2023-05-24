@@ -1,0 +1,60 @@
+{
+  "name": "purplemine",
+  "description": "A free Redmine 3.0+ theme written in SCSS",
+  "keywords": [
+    "redmine",
+    "theme",
+    "sass",
+    "scss"
+  ],
+  "author": "mrliptontea",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mrliptontea/PurpleMine2.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrliptontea/PurpleMine2/issues"
+  },
+  "homepage": "https://github.com/mrliptontea/PurpleMine2",
+  "scripts": {
+    "build": "grunt",
+    "watch": "grunt watch",
+    "lint:js": "eslint src/javascripts/",
+    "lint:sass": "stylelint src/sass/**/*.scss",
+    "lint": "npm run -S lint:js && npm run -S lint:sass"
+  },
+  "dependencies": {
+    "@liquid-js/sass-inline-svg": "^2.0.0",
+    "autoprefixer": "^9.8.6",
+    "grunt": "^1.4.0",
+    "grunt-contrib-uglify": "^5.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "^3.1.0",
+    "sass": "^1.34.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "stylelint": "^13.13.1",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.19.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --relative"
+    }
+  }
+}

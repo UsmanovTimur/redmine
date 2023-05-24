@@ -1,0 +1,100 @@
+---
+name: test
+
+on:
+  push:
+    branches-ignore: [debian]
+    tags: ['*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.redmine }} on ${{ matrix.ruby }}
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        include:
+          - ruby: "3.1"
+            redmine: "5.0.5"
+          - ruby: "3.0"
+            redmine: "5.0.5"
+          - ruby: "2.7"
+            redmine: "5.0.5"
+          - ruby: "2.7"
+            redmine: "4.2.10"
+      fail-fast: false
+
+    env:
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 10
+      BUNDLE_WITHOUT: development
+      REDMINE_VERSION: ${{ matrix.redmine }}
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: setup postgres
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres createuser -s ${USER}
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: True
+
+      - name: setup cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: v5-ruby-${{ matrix.ruby }}-redmine-${{ matrix.redmine }}
+
+      - name: setup redmine ${{ matrix.redmine }}
+        run: ./redmine update
+
+      - name: run tests
+        run: ./redmine exec bundle exec rspec --color --format doc
+
+  rubocop:
+    runs-on: ubuntu-22.04
+
+    env:
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 10
+      BUNDLE_WITHOUT: development
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler-cache: True
+
+      - run: bundle exec rubocop --fail-level E --extra-details --display-time --color
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - test
+      - rubocop
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@master
+      - run: git archive --worktree-attributes --format tar.gz -9 --prefix redmine_dashboard/ "${GITHUB_REF_NAME}" > "redmine-dashboard_${GITHUB_REF_NAME}.tar.gz"
+      - uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: true
+          discussion_category_name: Announcements
+          generate_release_notes: true
+          body: |
+            ---
+
+            ### Looking for testers!
+
+            Unfortunately, I do not have access to any larger Redmine project anymore, nor am I using Redmine anywhere anymore. I can only test with some artificially constructed local project that cannot represent any real project or usage. I would really appreciate if you can test ${GITHUB_REF_NAME} in your project or organization and report any findings (or their absence). Thank you!
+          files: |
+            redmine-dashboard_*.tar.gz

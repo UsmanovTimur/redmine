@@ -1,0 +1,300 @@
+//
+// Buttons
+// --------------------------------------------------
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button {
+  @include button-size($btn-padding-vertical, $btn-padding-horizontal, $font-size-base, $line-height-base, $border-radius-base);
+  display: inline-block;
+  margin-bottom: 0;
+  transition:
+    border-color $transition-time ease-in-out,
+    background-color $transition-time ease-in-out,
+    box-shadow $transition-time ease-in-out;
+  border: 1px solid;
+  font-weight: $btn-font-weight;
+  text-align: center;
+  vertical-align: top;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    opacity: .65;
+    box-shadow: none;
+    pointer-events: none; // Future-proof disabling of clicks
+  }
+}
+
+
+//== Form buttons layout
+//
+
+form {
+  input[type="submit"] {
+    margin-right: 2px;
+
+    + input {
+      @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+    }
+
+    ~ a {
+      margin-right: 2px;
+
+      + a {
+        margin-left: 2px;
+      }
+    }
+  }
+}
+
+
+//== Repository's 'View differences' button
+//
+
+form[action*="repository/diff"] {
+  margin-bottom: $line-height-computed * .5;
+}
+
+
+//== Forum and news message form buttons layout
+//
+
+#message-form,
+#news-form {
+  #message_sticky,
+  #message_locked {
+    position: relative;
+    top: 1px;
+    margin-left: 5px;
+  }
+}
+
+
+//== Button links
+//
+p.buttons,
+.other-formats > span,
+#wiki_add_attachment > p,
+#content > .contextual,
+#content > .contextual > span:not(.drdn),
+#query_form > .contextual,
+#query_form_with_buttons > .contextual {
+  > a,
+  > span:not(.drdn) {
+    display: inline-block;
+    margin-right: 1px;
+    margin-left: 1px;
+    padding: $btn-padding-vertical $btn-padding-horizontal-small;
+    transition:
+      border-color $transition-time ease-in-out,
+      background-color $transition-time ease-in-out,
+      color $transition-time ease-in-out;
+    border: 1px solid;
+    border-radius: $border-radius-base;
+    font-size: $font-size-base;
+
+    &.icon {
+      padding-left: 20px + $btn-padding-horizontal-small;
+      background-position: $btn-padding-horizontal-small 50%;
+    }
+  }
+
+  > a {
+    border-color: $pagination-border;
+    background-color: $pagination-bg;
+    color: $pagination-color;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover,
+    &:focus {
+      border-color: $pagination-hover-border;
+      background-color: $pagination-hover-bg;
+      color: $pagination-hover-color;
+      text-decoration: none;
+    }
+  }
+
+  > span:not(.drdn) {
+    border-color: $pagination-inactive-border;
+    background-color: $pagination-inactive-bg;
+    color: $pagination-inactive-color;
+  }
+}
+
+
+//== Submit + cancel
+//
+
+#issue-form,
+.mypage-box,
+.journal,
+.edit_news,
+.edit_content,
+.edit_time_entry,
+.edit_membership {
+  input[type="submit"] + a {
+    margin-left: ceil($btn-padding-horizontal-small * .5);
+  }
+}
+
+
+//== Apply + clear
+//
+
+form {
+  input,
+  button,
+  select {
+    ~ a {
+      margin-left: ceil($btn-padding-horizontal-small * .5);
+      line-height: $input-height-base;
+    }
+  }
+}
+
+
+//== Action buttons group
+//
+
+p.buttons {
+  margin-bottom: $line-height-computed;
+
+  a {
+    line-height: $line-height-base;
+  }
+}
+
+
+//== Export actions
+//
+
+.other-formats {
+  margin: $line-height-computed 0 0;
+  text-align: right;
+
+  > span {
+    margin-right: 1px;
+    margin-left: 1px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @media screen and (min-width: $redmine-responsive-min) {
+    .pagination + &,
+    #wiki_add_attachment + & {
+      margin-top: 0;
+      float: right;
+    }
+  }
+}
+
+
+//== Query builder buttons
+//
+
+.query-columns {
+  select {
+    width: auto !important; // stylelint-disable-line declaration-no-important
+    min-width: 130px;
+  }
+
+  label + & {
+    margin-left: $padding-side;
+  }
+
+  @at-root span#{&} {
+    > span {
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
+    label {
+      display: block;
+      margin-bottom: $line-height-computed * .5;
+      line-height: initial;
+    }
+  }
+
+  .buttons {
+    vertical-align: middle;
+
+    br {
+      display: none;
+    }
+
+    input[type="button"] {
+      display: block;
+      width: 32px;
+      margin-bottom: 4px;
+      padding-right: 1px;
+      padding-left: 1px;
+      @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
+    }
+  }
+}
+
+
+//== Button for toggling multiselect (in filters)
+//
+
+a[data-expands],
+.toggle-multiselect {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: $border-radius-base;
+  background-image: inline-svg("plus.svg", (path: (fill: $btn-default-icon-color)));
+  background-repeat: no-repeat;
+  background-position: 2px 2px;
+  font-size: 0;
+  vertical-align: top;
+  cursor: pointer;
+  user-select: none;
+  @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
+
+  &.icon-only::before {
+    content: none;
+  }
+}
+
+a[data-expands] {
+  margin-right: 10px;
+
+  > .toggle-multiselect {
+    padding: 0;
+    border: 0 none;
+    background: transparent;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+a.icon-toggle-minus[data-expands],
+select[multiple="multiple"] + .toggle-multiselect {
+  background-image: inline-svg("minus.svg", (path: (fill: $btn-default-icon-color)));
+}

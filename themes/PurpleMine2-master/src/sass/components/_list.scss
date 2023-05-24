@@ -1,0 +1,776 @@
+//
+// Lists
+// --------------------------------------------------
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table.list {
+  width: 100%;
+  margin-bottom: $line-height-computed;
+  font-size: $font-size-list;
+
+  .autoscroll & {
+    margin-bottom: 0;
+  }
+
+  &.changesets {
+    margin-bottom: $line-height-computed;
+  }
+
+  th,
+  .table-list-header {
+    padding: $table-cell-padding;
+    border: 2px solid $table-border-color;
+    border-width: $table-list-header-border;
+    background-color: $table-list-header-bg;
+    color: $gray-700;
+    vertical-align: bottom;
+
+    @if $table-list-header-bg == $body-bg {
+      @at-root .box & {
+        background-color: $panel-bg;
+      }
+    }
+
+    a {
+      color: $gray-900;
+    }
+  }
+
+  tr.ui-sortable-helper {
+    background-color: $highlight-bg;
+  }
+
+  td {
+    padding: $table-cell-padding;
+    border: 1px solid $table-border-color;
+    border-width: $table-list-item-border;
+    text-align: center;
+    vertical-align: top;
+
+    &.icon {
+      padding-left: $table-cell-padding + $icon-width;
+    }
+
+    &.id,
+    &.issue_id,
+    &.legacy_id,
+    &.parent,
+    &.relations,
+    &.tracker {
+      width: 2%;
+    }
+
+    &.id,
+    &.issue_id,
+    &.legacy_id {
+      font-weight: $font-weight-bold;
+    }
+
+    &.reorder {
+      white-space: nowrap;
+    }
+
+    &.attachments a {
+      display: block;
+    }
+  }
+
+  th,
+  td {
+    &.checkbox {
+      width: 15px;
+      padding-right: $table-cell-padding;
+      padding-left: $table-cell-padding;
+
+      @if (parse-length($table-list-item-border, right) == 0) {
+        &:first-child {
+          padding-right: 0;
+        }
+      }
+
+      input {
+        margin: 2px 0 0;
+      }
+    }
+
+    &.activity,
+    &.assigned_to,
+    &.attachments,
+    &.author,
+    &.category,
+    &.comments,
+    &.description,
+    &.fixed_version,
+    &.last_notes,
+    &.last_updated_by,
+    &.name,
+    &.parent-subject,
+    &.priority,
+    &.relations,
+    &.roles,
+    &.status,
+    &.string,
+    &.subject,
+    &.text,
+    &.tracker,
+    &.user {
+      text-align: left;
+    }
+
+    &.id,
+    &.legacy_id,
+    &.estimated_hours,
+    &.float,
+    &.int,
+    &.remaining_hours,
+    &.spent_hours,
+    &.story_points {
+      text-align: right;
+    }
+  }
+
+  td,
+  div {
+    &.buttons {
+      text-align: right;
+      white-space: nowrap;
+
+      a {
+        margin-right: $padding-small-vertical;
+
+        &.icon-only {
+          margin-right: 0;
+        }
+      }
+
+      img {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  caption {
+    padding: .5em .5em .5em 0;
+    text-align: left;
+  }
+}
+
+.table-list-cell {
+  display: table-cell;
+  padding: $table-cell-padding;
+  vertical-align: top;
+}
+
+tr.project {
+  .name a {
+    white-space: nowrap;
+  }
+
+  &.closed,
+  &.archived,
+  &.closed a,
+  &.archived a {
+    color: $gray-600;
+  }
+
+  &.idnt td.name {
+    background-image: inline-svg("chevron-right.svg", (path: (fill: $gray-600)));
+    background-repeat: no-repeat;
+  }
+
+  @for $i from 1 through 9 {
+    &.idnt-#{$i} td.name {
+      padding-left: $table-cell-padding + 16px * $i;
+      background-position: ($table-cell-padding + 16px * ($i - 1) - 3px) 50%;
+    }
+  }
+}
+
+tr.issue {
+  text-align: center;
+  white-space: nowrap;
+
+  .category,
+  .enumeration,
+  .list,
+  .parent-subject,
+  .parent,
+  .relations,
+  .string,
+  .subject,
+  .text {
+    white-space: normal;
+  }
+
+  .relations {
+    text-align: left;
+    white-space: normal;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+
+  .controller-issues.action-index & {
+    &.assigned-to-me {
+      .assigned_to,
+      .subject {
+        a {
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+  }
+
+  &.idnt td.subject {
+    background-image: inline-svg("chevron-right.svg", (path: (fill: $gray-600)));
+    background-repeat: no-repeat;
+  }
+
+  &.overdue td.due_date {
+    color: $brand-danger;
+  }
+
+  @for $i from 1 through 9 {
+    &.idnt-#{$i} td.subject {
+      padding-left: $table-cell-padding + 16px * $i;
+      background-position: ($table-cell-padding + 16px * ($i - 1) - 3px) 50%;
+    }
+  }
+}
+
+.issues {
+  .block_column,
+  .description,
+  .last_notes {
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+
+    > span {
+      display: block;
+      margin-bottom: $line-height-computed * .25;
+      padding: $table-cell-padding;
+      font-weight: $font-weight-bold;
+    }
+
+    pre {
+      white-space: normal;
+    }
+
+    @media screen and (min-width: $screen-sm-min) {
+      > .wiki {
+        max-height: 20em;
+        padding: $padding-wiki;
+        overflow: auto;
+      }
+    }
+  }
+}
+
+tr {
+  span.expander {
+    display: inline-block;
+    padding: 0;
+    float: left;
+
+    &.icon {
+      padding-left: 18px;
+      text-align: center;
+
+      &::before {
+        margin: 0 0 0 -18px;
+        color: $gray-600;
+        font-size: 12px;
+      }
+    }
+
+    &:not(.icon) {
+      width: 18px;
+      padding: 0;
+      background-image: inline-svg("plus.svg", (path: (fill: $btn-default-icon-color)));
+      background-repeat: no-repeat;
+      background-position: center center;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+
+  &.open span.expander:not(.icon) {
+    background-image: inline-svg("minus.svg", (path: (fill: $btn-default-icon-color)));
+  }
+}
+
+td.center {
+  text-align: center;
+}
+
+td.assigned_to,
+td.last_updated_by {
+  white-space: normal;
+}
+
+.issue-report {
+  table-layout: fixed;
+}
+
+.issue-report-graph {
+  width: 75%;
+  margin: $line-height-computed auto;
+}
+
+.sample-data {
+  margin: $line-height-computed * .5;
+  margin-bottom: $line-height-computed;
+  border: 1px solid $table-border-color;
+
+  td {
+    border: 1px solid $table-border-color;
+  }
+
+  tr:first-child td {
+    font-weight: $font-weight-bold;
+    text-align: center;
+  }
+}
+
+tr.builtin td.name {
+  font-style: italic;
+}
+
+tr.entry {
+  border: 1px solid $gray-400;
+
+  td {
+    white-space: nowrap;
+
+    &.filename {
+      width: 30%;
+      text-align: left;
+    }
+
+    &.filename_no_report {
+      width: 70%;
+      text-align: left;
+    }
+
+    &.size {
+      text-align: right;
+    }
+
+    &.revision,
+    &.author {
+      text-align: center;
+    }
+
+    &.age {
+      text-align: right;
+    }
+  }
+
+  &.file td {
+    &.filename a,
+    &.filename_no_report a {
+      margin-left: 18px;
+    }
+  }
+}
+
+@if $table-list-color-odd-rows {
+  table.list:not(.odd-even) tbody tr:nth-child(odd):not(.ui-sortable-helper),
+  .odd {
+    > td {
+      background-color: $table-bg-accent;
+    }
+  }
+}
+
+@if $table-list-color-even-rows {
+  table.list:not(.odd-even) tbody tr:nth-child(even):not(.ui-sortable-helper),
+  .even {
+    > td {
+      background-color: $table-bg-accent;
+    }
+  }
+}
+
+@if $table-list-highlight-rows {
+  table.list > tbody > tr:nth-child(n):hover:not(.ui-sortable-helper) {
+    background-color: $table-bg-hover;
+
+    @if $color-priorities {
+      @each $priority-id, $priority-color in $priority-color-map {
+        &.priority-#{$priority-id} {
+          background-color: rgba(map-get($priority-color, background), $table-color-hover-factor);
+        }
+      }
+    }
+  }
+}
+
+
+//== Priorities
+//
+
+@if $priority-icon {
+  table.list tbody tr {
+    .priority {
+      @include priority-icon-base;
+    }
+  }
+
+  @each $priority-id, $priority-icon in $priority-icons-map {
+    @include priority-icon(
+      ".priority-#{$priority-id}",
+      map-get($priority-icon, color),
+      map-get($priority-icon, icon)
+    );
+  }
+}
+
+@if $color-priorities {
+  @each $priority-id, $priority-color in $priority-color-map {
+    tr.priority-#{$priority-id} {
+      &.odd td {
+        background-color: rgba(map-get($priority-color, background), $table-color-odd-factor);
+      }
+
+      &.even td {
+        background-color: rgba(map-get($priority-color, background), $table-color-even-factor);
+      }
+
+      td {
+        border-color: map-get($priority-color, border);
+        color: map-get($priority-color, color);
+      }
+
+      a {
+        color: map-get($priority-color, link);
+      }
+    }
+  }
+}
+
+@if $color-trackers {
+  tr.issue .id > a,
+  tr.issue .issue_id > a,
+  tr.issue .legacy_id > a,
+  a.issue,
+  .relations > span > a.issue,
+  .parent > a.issue {
+    border-radius: $border-radius-small ($border-radius-small * 3) ($border-radius-small * 3) $border-radius-small;
+    background-color: $tracker-default-bg;
+    color: $tracker-default-text;
+
+    &:hover {
+      background-color: darken($tracker-default-bg, 10%);
+      color: $tracker-default-text;
+      text-decoration: none;
+    }
+
+    &:focus,
+    &:active {
+      text-decoration: none;
+    }
+  }
+
+  a.issue {
+    margin-right: 1px;
+    padding: $tracker-inline-padding;
+    font-weight: $font-weight-normal;
+
+    &.closed {
+      position: relative;
+      color: mix($tracker-default-text, $tracker-default-bg, 75%);
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        right: 5px;
+        bottom: 0;
+        left: 5px;
+        height: calc(50% - 2px * .5);
+        transform: rotate(-4deg);
+        transition: border-color $transition-time;
+        border-top: 2px solid rgba($tracker-default-text, .95);
+      }
+
+      &:hover::after {
+        border-top-color: rgba($tracker-default-text, .25);
+      }
+    }
+  }
+
+  tr.issue .id > a,
+  tr.issue .legacy_id > a {
+    display: block;
+    padding: $tracker-list-padding;
+
+    &::before {
+      content: "#";
+      color: mix($tracker-default-text, $tracker-default-bg, 50%);
+    }
+  }
+
+  tr.issue .issue_id > a {
+    display: inline-block;
+    padding: $tracker-list-padding;
+  }
+
+  @each $tracker-id, $tracker-colors in $tracker-colors-map {
+    @include tracker(
+      ".tracker-#{$tracker-id}",
+      map-get($tracker-colors, background),
+      map-get($tracker-colors, color)
+    );
+  }
+}
+
+
+//== List groups
+//
+
+tr.group {
+  > td {
+    border-bottom: 1px solid $table-border-color;
+    font-weight: $font-weight-bold;
+    text-align: left;
+
+    a {
+      color: $brand-primary;
+    }
+  }
+
+  .toggle-all {
+    display: none;
+    color: $gray-600;
+    font-weight: $font-weight-normal;
+  }
+
+  &:hover .toggle-all {
+    display: inline;
+  }
+}
+
+.toggle-all:hover {
+  text-decoration: none;
+}
+
+
+//== Time entry in report
+//
+
+tr.time-entry {
+  text-align: center;
+
+  td.project,
+  td.spent_on,
+  td.activity {
+    width: 6em;
+  }
+
+  td.user {
+    width: 12em;
+  }
+
+  td.issue,
+  td.comments {
+    text-align: left;
+    white-space: normal;
+  }
+
+  td.hours {
+    font-weight: $font-weight-bold;
+  }
+}
+
+.time-entries,
+tr.time-entry {
+  td.hours {
+    width: 1%;
+    text-align: right;
+    white-space: nowrap;
+
+    .hours-dec {
+      font-size: .9em;
+    }
+  }
+}
+
+.mypage-box {
+  td.hours {
+    font-weight: $font-weight-bold;
+
+    em {
+      font-style: normal;
+    }
+  }
+
+  tr.time-entry td.hours {
+    font-weight: $font-weight-normal;
+  }
+}
+
+//== Wiki page history entry
+//
+
+tr.wiki-page-version {
+  td.updated_on,
+  td.author {
+    text-align: center;
+  }
+}
+
+//== Project versions list
+//
+
+tr.version {
+  &.closed {
+    color: $gray-700;
+
+    a {
+      color: $gray-700;
+    }
+  }
+
+  td {
+    &.date,
+    &.status,
+    &.sharing {
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+}
+
+
+//== Users list
+//
+
+tr.user {
+  td {
+    width: 13%;
+    white-space: nowrap;
+
+    &.username,
+    &.firstname,
+    &.lastname {
+      text-align: left;
+    }
+
+    &.email {
+      width: 18%;
+      text-align: left;
+    }
+  }
+
+  &.locked,
+  &.registered,
+  &.locked a,
+  &.registered a {
+    color: $gray-600;
+  }
+}
+
+
+//== Plugins list
+//
+
+table.plugins {
+  .configure {
+    text-align: right;
+  }
+
+  span.name {
+    margin-bottom: .5em;
+    font-size: $font-size-large;
+    font-weight: $font-weight-bold;
+  }
+
+  .description,
+  .url {
+    display: block;
+  }
+}
+
+
+//== Files list
+//
+
+table.files {
+  tbody th {
+    text-align: left;
+  }
+
+  tr.file td {
+    &.filename {
+      padding-left: $icon-width + $table-cell-padding;
+      text-align: left;
+    }
+
+    &.digest {
+      font-family: $font-family-monospace;
+    }
+  }
+}
+
+
+//== Admin lists
+//
+
+.controller-enumerations {
+  td.name {
+    width: 50%;
+  }
+
+  td.tick,
+  td.reorder {
+    width: 15%;
+    text-align: center;
+  }
+}
+
+table.list.enumerations {
+  table-layout: fixed;
+
+  + h3 {
+    margin-top: $line-height-computed * 2;
+  }
+
+  + p {
+    margin-bottom: $line-height-computed * 2;
+  }
+}
+
+
+//== Totals
+//
+
+.query-totals {
+  #content & {
+    margin-top: 0;
+
+    @media screen and (min-width: $redmine-responsive-min) {
+      margin-top: -($line-height-computed * 2 + $btn-padding-vertical);
+      text-align: right;
+    }
+  }
+
+  > span {
+    margin-right: $padding-base-horizontal;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .value {
+    font-weight: $font-weight-bold;
+  }
+}

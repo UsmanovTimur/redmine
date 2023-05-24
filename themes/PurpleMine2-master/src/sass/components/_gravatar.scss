@@ -1,0 +1,34 @@
+//
+// Gravatars
+// --------------------------------------------------
+
+img.gravatar {
+  position: relative;
+  top: -.15em;
+  overflow: hidden;
+  border-radius: $border-radius-large;
+  line-height: 1;
+  vertical-align: middle;
+
+  h2 &,
+  h3 &,
+  h4 & {
+    margin-right: 5px;
+  }
+}
+
+
+//== Administration -> /users
+//
+
+.username img.gravatar {
+  margin-right: .5em;
+}
+
+//== Gravatar
+//   Used on 12px Gravatar img tags without the icon background
+
+.icon-gravatar {
+  margin-right: 5px;
+  float: left;
+}
